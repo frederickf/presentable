@@ -39,16 +39,15 @@ var presentable = (function(window) {
         },
 
         init: function(options) {
-            var dataGenerator, tocContainer, iconContainer;
+            var tocContainer, iconContainer;
 
             try {
                 main.extend(main.options, options);
-
-                dataGenerator = json[main.options.deckType];
+                main.extend(json, json.frameworks[main.options.deckType]);
 
                 if (main.options.data.slides.length === 0) {
-                    dataGenerator.TITLE_SEARCH_STRING = main.options.titles;
-                    dataGenerator.create(main.options.data);
+                    json.TITLE_SEARCH_STRING = main.options.titles;
+                    json.create(main.options.data);
                 }
 
                 tocContainer = document.querySelector(main.options.tocContainer);
@@ -115,23 +114,39 @@ var presentable = (function(window) {
         }
     };
 
-    /**
-     * 1. Parent has title, 1st child does not
-     *    ** Use parent title, omit child
-     *    ** removeUntitledFirstChild()
-     * 2. 1st Child has title, parent does not
-     *    ** Use child title for parent and child, omit child as duplicate
-     *    ** removeNestedDupicatesByTitles()
-     * 3. Neither parent, nor child has title
-     *    ** Both assigned "Untitled slide", child omitted
-     *    ** removeNestedDupicatesByTitles()
-     */
-    json = {};
-    json.revealjs = {
+    json = {
         TITLE_SEARCH_STRING: '',
+        slideTitle: function(slide) {
+            var titleElement = slide.querySelector(this.TITLE_SEARCH_STRING);
+            if (titleElement) {
+                return titleElement.textContent;
+            }
+            else {
+                return "Untitled Slide"
+            }
+        },
+        create: function(data) {
+            var slides, slideCount, slideData, tocArray, i;
+            slides = document.querySelectorAll(this.SLIDE_SEARCH_STRING);
+            tocArray = data.slides;
+
+            slideCount = slides.length;
+            for (i = 0; i < slideCount; i++) {
+                slideData = {};
+                slideData.index = this.slideIndex(slides[i], i);
+                slideData.title = this.slideTitle(slides[i]);
+                tocArray.push(slideData);
+            }
+        }
+    };
+
+    json.frameworks = {};
+
+    json.frameworks.revealjs = {
+        SLIDE_SEARCH_STRING: '.slides > section',
         create: function(data) {
             var sections, sectionCount, i;
-            sections = document.querySelectorAll('.slides > section');
+            sections = document.querySelectorAll(this.SLIDE_SEARCH_STRING);
 
             sectionCount = sections.length;
             for (i = 0; i < sectionCount; i++) {
@@ -142,6 +157,17 @@ var presentable = (function(window) {
             this.removeUntitledFirstChild(data.slides);
         },
 
+        /**
+         * 1. Parent has title, 1st child does not
+         *    ** Use parent title, omit child
+         *    ** removeUntitledFirstChild()
+         * 2. 1st Child has title, parent does not
+         *    ** Use child title for parent and child, omit child as duplicate
+         *    ** removeNestedDupicatesByTitles()
+         * 3. Neither parent, nor child has title
+         *    ** Both assigned "Untitled slide", child omitted
+         *    ** removeNestedDupicatesByTitles()
+         */
         processSectionRecursive: function(slideIndex, slide, tocArray) {
             var slideData, sectionCount, i;
 
@@ -199,32 +225,20 @@ var presentable = (function(window) {
         }
     };
 
-    json.html5slides = {
-        TITLE_SEARCH_STRING: '',
-        create: function(data) {
-            var slides, slideCount, slideData, tocArray, i;
-            slides = document.querySelectorAll('article');
-            tocArray = data.slides;
-
-            slideCount = slides.length;
-            for (i = 0; i < slideCount; i++) {
-                slideData = {};
-                slideData.index = i + 1;
-                slideData.title = this.slideTitle(slides[i]);
-                tocArray.push(slideData);
-            }
-        },
-
-        slideTitle: function(slide) {
-            var titleElement = slide.querySelector(this.TITLE_SEARCH_STRING);
-            if (titleElement) {
-                return titleElement.textContent;
-            }
-            else {
-                return "Untitled Slide"
-            }
+    json.frameworks.html5slides = {
+        SLIDE_SEARCH_STRING: 'article',
+        slideIndex: function(slide, i) {
+            return i + 1;
         }
     };
+
+    json.frameworks.shower = {
+        SLIDE_SEARCH_STRING: '.slide',
+        slideIndex: function(slide, i) {
+            return slide.id;
+        }
+    };
+
 
     html = {
         HASH_STRING: '',
@@ -248,7 +262,7 @@ var presentable = (function(window) {
 
     return {
         init: main.init,
-        getTitle: main.slideTitlesRecursive
+        sideTitle: main.slideTitlesRecursive
     };
 
 })(window);

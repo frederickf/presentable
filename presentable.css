@@ -1,4 +1,4 @@
-/* boring Legal Stuff
+/* Boring Legal Stuff
 ************************************************************************************************************************
 Copyright (c) 2012, Frederick C. Feibel
 All rights reserved.
@@ -20,15 +20,12 @@ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWIS
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ***********************************************************************************************************************/
 
-/* Good stuff starts here
-************************************************************************************************************************
-* This file contains styles for every html presentation supported.  Framework specific lines are commented as such.
-* Lines with #reveal support reveal.js versions < 1.4
-*/
+
+/* default & Reveal.js < 1.4 (due to the usage of an ID on the body)
+======================================================================================================================*/
 
 #presentable-toc {
     height: 600px;
-    /*height: 540px;   /* html5slides */
     overflow: auto;
 }
 
@@ -91,6 +88,61 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     outline: none;
 }
 
+/* Reveal.js all
+======================================================================================================================*/
+#reveal .slides .future,
+.reveal .slides .future {
+    /* Without this anchor tags are click-able in future slides even though they cannot actually be seen */
+    visibility: hidden;
+}
+
+#reveal #presentable-icon a:hover img,
 .reveal #presentable-icon a:hover img {
     border-color: #13daec;
+}
+
+
+/* html5slides
+======================================================================================================================*/
+#presentable-toc.html5slides {
+    height: 540px;
+}
+
+
+/* shower
+======================================================================================================================*/
+#presentable-toc.shower {
+    height: 340px;
+    font-size: 80%;
+}
+#presentable-toc.shower ol {
+    counter-reset: tocIndex;
+}
+
+#presentable-toc.shower li div {
+    border-color: #000;
+}
+
+#presentable-toc.shower a {
+    border: none;
+}
+
+#presentable-toc.shower li .title:after {
+    counter-increment: tocIndex;
+    content:counter(tocIndex, decimal-leading-zero);
+    float: right;
+    color: #bbb;
+}
+
+#presentable-toc.shower .index {
+    display: none;
+}
+
+.cover #presentable-icon.shower,
+.list #presentable-icon.shower {
+    display: none;
+}
+
+#presentable-icon.shower img {
+    border-color: #bbb;
 }
