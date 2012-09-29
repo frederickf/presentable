@@ -3,7 +3,7 @@
 
 Presentable is a small script/plugin/widget/thingy that adds a table of contents to HTML based presentations by parsing the header tags.  
 
-See a examples and detailed instructions: [http://fcfeibel.com/presentable/](http://fcfeibel.com/presentable/)
+See examples and detailed instructions: [http://fcfeibel.com/presentable/](http://fcfeibel.com/presentable/)
 
 ## Framework Support
 
@@ -45,7 +45,7 @@ Reference presentable.js following the conventions set by your framework of choi
     <script src="path/to/presentable.js"></script>
 
 ### Initialize
-This goes <em>after</em> after all the slides.
+This goes <em>after</em> all the slides.
 
     presentable.init();
 
@@ -56,5 +56,5 @@ It can also take a configuration object allowing Presentable to support almost a
     });
 
 ## Learn More
-See a examples and instructions: [http://fcfeibel.com/presentable/](http://fcfeibel.com/presentable/)
+See examples and instructions: [http://fcfeibel.com/presentable/](http://fcfeibel.com/presentable/)
 
