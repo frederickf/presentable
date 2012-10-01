@@ -32,20 +32,20 @@ var presentable = (function(window) {
             titles: "h1,h2,h3,.presentable-title",
             tocContainer: "#presentable-toc",
             iconContainer: "#presentable-icon",
-            urlHash: "#/",
-            deckType: "revealjs",
+            urlHash: "#",
+            framework: "",
             data: {"slides": []},
             reload: false
         },
 
-        init: function(options) {
+        init: function(userOptions) {
             var tocContainer, iconContainer;
 
             try {
-                main.extend(main.options, options);
-                main.extend(json, json.frameworks[main.options.deckType]);
+                main.configure(userOptions);
 
                 if (main.options.data.slides.length === 0) {
+                    main.extend(json, json.frameworks[main.options.framework]);
                     json.TITLE_SEARCH_STRING = main.options.titles;
                     json.create(main.options.data);
                 }
@@ -63,6 +63,21 @@ var presentable = (function(window) {
             }
             catch(e) {
                 log("Presentable: " + e.message);
+            }
+        },
+
+        configure: function(userOptions) {
+            if (userOptions.framework) {
+                // Configure with framework configs
+                main.extend(main.options, json.frameworks[userOptions.framework].options);
+                // but allow user to override them
+                main.extend(main.options, userOptions);
+            }
+            else if (userOptions.data) {
+                main.extend(main.options, userOptions);
+            }
+            else {
+                throw {message: "You must provide a value for framework or data."};
             }
         },
 
@@ -144,6 +159,9 @@ var presentable = (function(window) {
 
     json.frameworks.revealjs = {
         SLIDE_SEARCH_STRING: '.slides > section',
+        options: {
+            urlHash: "#/"
+        },
         create: function(data) {
             var sections, sectionCount, i;
             sections = document.querySelectorAll(this.SLIDE_SEARCH_STRING);
@@ -227,6 +245,9 @@ var presentable = (function(window) {
 
     json.frameworks.html5slides = {
         SLIDE_SEARCH_STRING: 'article',
+        options: {
+            reload: true
+        },
         slideIndex: function(slide, i) {
             return i + 1;
         }
