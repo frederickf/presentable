@@ -13,6 +13,7 @@ The following presentation frameworks are supported out of the box, and Presenta
 * [Reveal.js](https://github.com/hakimel/reveal.js)
 * [html5slides](http://code.google.com/p/html5slides/)
 * [Shower](https://github.com/pepelsbey/shower)
+* [impress.js](https://github.com/bartaz/impress.js/)
 
 ## Browser Support
 Currently Presentable has been tested and works in Firefox, Chrome, Safari, IE9/10, and the default browser on my HTC G2 Android phone.

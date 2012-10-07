@@ -260,6 +260,13 @@ var presentable = (function(window) {
         }
     };
 
+    json.frameworks.impressjs = {
+        SLIDE_SEARCH_STRING: '.step',
+        slideIndex: function(slide, i) {
+            return slide.id;
+        }
+    };
+
 
     html = {
         HASH_STRING: '',

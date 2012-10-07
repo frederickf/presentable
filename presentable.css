@@ -146,3 +146,36 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #presentable-icon.shower img {
     border-color: #bbb;
 }
+
+/* impress.js
+======================================================================================================================*/
+#presentable-icon.impressjs {
+    pointer-events: auto;
+}
+
+#presentable-icon.impressjs a {
+    background: none;
+}
+
+#presentable-toc.impressjs ol {
+    counter-reset: tocIndex;
+}
+
+#presentable-toc.impressjs div {
+    line-height: 1;
+}
+
+#presentable-toc.impressjs li .title:after {
+    counter-increment: tocIndex;
+    content:counter(tocIndex, decimal-leading-zero);
+    float: right;
+    color: #bbb;
+}
+
+#presentable-toc.impressjs li .title {
+    font-size: 35px;
+}
+
+#presentable-toc.impressjs .index {
+    display: none;
+}
