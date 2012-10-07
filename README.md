@@ -36,7 +36,7 @@ And add this as a child of the &lt;body&gt; tag.
 
     <aside id="presentable-icon" class="frameworkname">
         <a title="Table of Contents" href="#?">
-            <img alt="Table of Contents" src="path/to/icon-frameworkname.png"/>
+            <img alt="Table of Contents" src="path/to/frameworkname.png"/>
         </a>
     </aside>
 
