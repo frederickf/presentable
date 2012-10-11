@@ -29,13 +29,14 @@ var presentable = (function(window) {
 
     main = {
         options: {
+            data: {"slides": []},
+            framework: "",
+            iconContainer: "#presentable-icon",
+            noTitle: "Untitled Slide",
+            reload: false,
             titles: "h1,h2,h3,.presentable-title",
             tocContainer: "#presentable-toc",
-            iconContainer: "#presentable-icon",
-            urlHash: "#",
-            framework: "",
-            data: {"slides": []},
-            reload: false
+            urlHash: "#"
         },
 
         init: function(userOptions) {
@@ -43,17 +44,16 @@ var presentable = (function(window) {
 
             try {
                 main.configure(userOptions);
-
-                if (main.options.data.slides.length === 0) {
-                    main.extend(json, json.frameworks[main.options.framework]);
-                    json.TITLE_SEARCH_STRING = main.options.titles;
-                    json.create(main.options.data);
-                }
-
                 tocContainer = document.querySelector(main.options.tocContainer);
                 iconContainer = document.querySelector(main.options.iconContainer);
 
-                html.HASH_STRING = main.options.urlHash;
+                if (main.options.data.slides.length === 0) {
+                    main.extend(json, json.frameworks[main.options.framework]);
+                    json.init(main.options);
+                    json.create(main.options.data);
+                }
+
+                html.init(main.options);
                 html.createRecursive(tocContainer, main.options.data.slides);
 
                 if (main.options.reload) {
@@ -131,13 +131,18 @@ var presentable = (function(window) {
 
     json = {
         TITLE_SEARCH_STRING: '',
+        UNTITLED_SLIDE_TEXT: '',
+        init: function(options) {
+            this.TITLE_SEARCH_STRING = options.titles;
+            this.UNTITLED_SLIDE_TEXT = options.noTitle;
+        },
         slideTitle: function(slide) {
             var titleElement = slide.querySelector(this.TITLE_SEARCH_STRING);
             if (titleElement) {
                 return titleElement.textContent;
             }
             else {
-                return "Untitled Slide"
+                return this.UNTITLED_SLIDE_TEXT;
             }
         },
         create: function(data) {
@@ -223,7 +228,7 @@ var presentable = (function(window) {
                 return this.slideTitleRecursive( childSlide );
             }
 
-            return "Untitled Slide";
+            return this.UNTITLED_SLIDE_TEXT;
         },
 
         removeNestedDupicatesByTitles: function (tocArray) {
@@ -236,7 +241,7 @@ var presentable = (function(window) {
 
         removeUntitledFirstChild: function (tocArray) {
             for (var i = 0; i < tocArray.length; i++) {
-                if ( tocArray[i].nested && (tocArray[i].nested[0].title === "Untitled Slide") ) {
+                if ( tocArray[i].nested && (tocArray[i].nested[0].title === this.UNTITLED_SLIDE_TEXT) ) {
                     tocArray[i].nested.shift();
                 }
             }
@@ -270,6 +275,9 @@ var presentable = (function(window) {
 
     html = {
         HASH_STRING: '',
+        init: function(options) {
+            this.HASH_STRING = options.urlHash;
+        },
         createRecursive: function(listParent, tocArray) {
             var ol, li, url, i;
             ol = document.createElement("ol");
@@ -289,7 +297,7 @@ var presentable = (function(window) {
     };
 
     return {
-        init: main.init,
+        toc: main.init,
         sideTitle: main.slideTitlesRecursive
     };
 

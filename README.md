@@ -48,13 +48,13 @@ Reference presentable.js following the conventions set by your framework of choi
 ### Initialize
 This goes <em>after</em> all the slides.
 
-    presentable.init({
+    presentable.toc({
         framework: "framework name here"
     });
 
 It can also accept other configuration options allowing Presentable to support almost any framework.
 
-    presentable.init({
+    presentable.toc({
         config: "options here"
     });
 
