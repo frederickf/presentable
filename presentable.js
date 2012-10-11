@@ -298,7 +298,7 @@ var presentable = (function(window) {
 
     return {
         toc: main.init,
-        sideTitle: main.slideTitlesRecursive
+        slideTitle: main.slideTitlesRecursive
     };
 
 })(window);
