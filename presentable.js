@@ -24,6 +24,7 @@ var presentable = (function(window) {
 
     var json,   // Objects for creating JSON representation of a particular presentation framework
         html,   // Uses JSON object created by json or provided by user to build the table of contents html
+        util,   // Shared methods, or gernalized methods not appropriate to particular abstraction
         main,   // The...um...main object that does all the...um...things
         log = console.log || function(){};
 
@@ -31,7 +32,8 @@ var presentable = (function(window) {
         options: {
             data: {"slides": []},
             framework: "",
-            iconContainer: "#presentable-icon",
+            iconContainer: "#presentuuhable-icon",
+            keyCode: 84,
             noTitle: "Untitled Slide",
             reload: false,
             titles: "h1,h2,h3,.presentable-title",
@@ -40,26 +42,34 @@ var presentable = (function(window) {
         },
 
         init: function(userOptions) {
-            var tocContainer, iconContainer;
+            var tocSlideData, tocContainer, iconContainer;
 
             try {
                 main.configure(userOptions);
-                tocContainer = document.querySelector(main.options.tocContainer);
-                iconContainer = document.querySelector(main.options.iconContainer);
 
                 if (main.options.data.slides.length === 0) {
-                    main.extend(json, json.frameworks[main.options.framework]);
+                    util.extend(json, json.frameworks[main.options.framework]);
                     json.init(main.options);
                     json.create(main.options.data);
                 }
 
+                tocSlideData = main.tocSlideDataRecursive(main.options.data.slides);
+                tocContainer = document.querySelector(main.options.tocContainer);
+                iconContainer = document.querySelector(main.options.iconContainer);
+
                 html.init(main.options);
                 html.createRecursive(tocContainer, main.options.data.slides);
 
-                if (main.options.reload) {
-                    main.enableForceReload(tocContainer);
-                    main.enableForceReload(iconContainer);
+                if (main.options.keyCode !== false) {
+                    main.enableKeyboardNavigation(tocSlideData);
                 }
+
+                if (iconContainer) {
+                    main.enableOnClickNavigation(iconContainer);
+                }
+
+                main.enableOnClickNavigation(tocContainer);
+
             }
             catch(e) {
                 log("Presentable: " + e.message);
@@ -69,24 +79,21 @@ var presentable = (function(window) {
         configure: function(userOptions) {
             if (userOptions.framework) {
                 // Configure with framework configs
-                main.extend(main.options, json.frameworks[userOptions.framework].options);
+                util.extend(main.options, json.frameworks[userOptions.framework].options);
                 // but allow user to override them
-                main.extend(main.options, userOptions);
+                util.extend(main.options, userOptions);
             }
             else if (userOptions.data) {
-                main.extend(main.options, userOptions);
+                util.extend(main.options, userOptions);
             }
             else {
                 throw {message: "You must provide a value for framework or data."};
             }
         },
 
-        /**
-         * Forces reload after updating URL hash for frameworks that do not provide API for navigation
-         *
-         * @param container
-         */
-        enableForceReload: function(container) {
+        // Takes into account that some frameworks don't listen to window.location updates
+        // requiring a foreced reload to navigate to the desired slide
+        enableOnClickNavigation: function(container) {
             container.addEventListener('click', function(event) {
                 var target;
 
@@ -95,9 +102,9 @@ var presentable = (function(window) {
 
                 target = event.target;
                 while (container != target) {
+                    // For some reason IE10 confusses img.src with a.href
                     if (target.href && target.tagName == "A") {
-                        window.location = target.href;
-                        window.location.reload();
+                        main.goToSlide(target.href);
                         break;
                     }
                     target = target.parentNode;
@@ -105,6 +112,36 @@ var presentable = (function(window) {
             }, false);
         },
 
+        enableKeyboardNavigation: function(tocSlideData) {
+            window.document.body.addEventListener('keyup', function(event) {
+                var keyPressed;
+                if (event.target.tagName == "INPUT" || event.target.tagName == "TEXTAREA" ||
+                    event.altKey || event.ctrlKey || event.metaKey) {
+                    return;
+                }
+
+                event.preventDefault();
+
+                keyPressed = event.keyCode || event.which;
+                if (keyPressed === main.options.keyCode) {
+                    main.goToSlide(main.options.urlHash + tocSlideData.index);
+                }
+            }, false);
+        },
+
+        tocSlideDataRecursive: function(tocArray) {
+            for (var i = 0; i < tocArray.length; i++) {
+
+                if (tocArray[i].presentable) {
+                    return tocArray[i];
+                }
+
+                if (tocArray[i].nested) {
+                    return main.tocSlideDataRecursive(tocArray[i].nested)
+                }
+            }
+            throw {message: 'Presentable not found in presentation.'};
+        },
 
         slideTitlesRecursive: function(index, tocArray, title) {
             title = title || '';
@@ -122,9 +159,11 @@ var presentable = (function(window) {
             return title;
         },
 
-        extend: function(a, b) {
-            for( var i in b ) {
-                a[ i ] = b[ i ];
+        goToSlide: function(URL) {
+            window.location =  URL;
+            // Some frameworks don't listen to changes in window.location necessitating forced reload
+            if (main.options.reload) {
+                window.location.reload();
             }
         }
     };
@@ -132,10 +171,14 @@ var presentable = (function(window) {
     json = {
         TITLE_SEARCH_STRING: '',
         UNTITLED_SLIDE_TEXT: '',
+        TOC_CONTAINER: '',
+
         init: function(options) {
             this.TITLE_SEARCH_STRING = options.titles;
             this.UNTITLED_SLIDE_TEXT = options.noTitle;
+            this.TOC_CONTAINER = options.tocContainer;
         },
+
         slideTitle: function(slide) {
             var titleElement = slide.querySelector(this.TITLE_SEARCH_STRING);
             if (titleElement) {
@@ -145,6 +188,11 @@ var presentable = (function(window) {
                 return this.UNTITLED_SLIDE_TEXT;
             }
         },
+
+        isTocSlide: function(slide) {
+            return slide.querySelector(this.TOC_CONTAINER);
+        },
+
         create: function(data) {
             var slides, slideCount, slideData, tocArray, i;
             slides = document.querySelectorAll(this.SLIDE_SEARCH_STRING);
@@ -155,6 +203,9 @@ var presentable = (function(window) {
                 slideData = {};
                 slideData.index = this.slideIndex(slides[i], i);
                 slideData.title = this.slideTitle(slides[i]);
+                if (this.isTocSlide(slides[i])) {
+                    slideData.presentable = "true";
+                }
                 tocArray.push(slideData);
             }
         }
@@ -180,6 +231,10 @@ var presentable = (function(window) {
             this.removeUntitledFirstChild(data.slides);
         },
 
+        isTocSlide: function(slide) {
+            return util.querySelectorChild(slide, this.TOC_CONTAINER);
+        },
+
         /**
          * 1. Parent has title, 1st child does not
          *    ** Use parent title, omit child
@@ -197,6 +252,9 @@ var presentable = (function(window) {
             slideData = {};
             slideData.index = slideIndex;
             slideData.title = this.slideTitleRecursive(slide);
+            if (this.isTocSlide(slide)) {
+                slideData.presentable = "true";
+            }
 
             tocArray.push(slideData);
 
@@ -295,6 +353,33 @@ var presentable = (function(window) {
             }
         }
     };
+
+
+    util = {
+        querySelectorChild: function(parentElement, childSelector) {
+            var tempId, child;
+
+            if (!parentElement.id) {
+                tempId = 'tempId_' + Math.floor(Math.random() * 1000 * new Date().getUTCMilliseconds());
+                parentElement.id = tempId
+            }
+
+            child = parentElement.querySelector('#' + parentElement.id + ' > ' + childSelector);
+
+            if (tempId) {
+                parentElement.id = '';
+            }
+
+            return child;
+        },
+
+        extend: function(a, b) {
+            for( var i in b ) {
+                a[ i ] = b[ i ];
+            }
+        }
+    };
+
 
     return {
         toc: main.init,
