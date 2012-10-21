@@ -32,7 +32,7 @@ var presentable = (function(window, document) {
         options: {
             data: {"slides": []},
             framework: "",
-            iconContainer: "#presentuuhable-icon",
+            iconContainer: "#presentable-icon",
             keyCode: 84,
             noTitle: "Untitled Slide",
             reload: false,
@@ -93,7 +93,7 @@ var presentable = (function(window, document) {
         },
 
         // Takes into account that some frameworks don't listen to window.location updates
-        // requiring a foreced reload to navigate to the desired slide
+        // requiring a forced reload to navigate to the desired slide
         enableOnClickNavigation: function(container) {
             container.addEventListener('click', function(event) {
                 var target;
@@ -133,7 +133,7 @@ var presentable = (function(window, document) {
         tocSlideDataRecursive: function(tocArray) {
             for (var i = 0; i < tocArray.length; i++) {
 
-                if (tocArray[i].presentable) {
+                if (tocArray[i].toc) {
                     return tocArray[i];
                 }
 
@@ -141,7 +141,7 @@ var presentable = (function(window, document) {
                     return main.tocSlideDataRecursive(tocArray[i].nested)
                 }
             }
-            throw {message: 'Presentable not found in presentation.'};
+            throw {message: 'Table of Contents container not found in presentation.'};
         },
 
         slideTitlesRecursive: function(index, tocArray, title) {
@@ -205,7 +205,7 @@ var presentable = (function(window, document) {
                 slideData.index = this.slideIndex(slides[i], i);
                 slideData.title = this.slideTitle(slides[i]);
                 if (this.isTocSlide(slides[i])) {
-                    slideData.presentable = "true";
+                    slideData.toc = "true";
                 }
                 tocArray.push(slideData);
             }
@@ -254,7 +254,7 @@ var presentable = (function(window, document) {
             slideData.index = slideIndex;
             slideData.title = this.slideTitleRecursive(slide);
             if (this.isTocSlide(slide)) {
-                slideData.presentable = "true";
+                slideData.toc = "true";
             }
 
             tocArray.push(slideData);
