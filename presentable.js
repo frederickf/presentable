@@ -20,7 +20,7 @@
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  **********************************************************************************************************************/
 
-var presentable = (function(window) {
+var presentable = (function(window, document) {
 
     var json,   // Objects for creating JSON representation of a particular presentation framework
         html,   // Uses JSON object created by json or provided by user to build the table of contents html
@@ -42,7 +42,7 @@ var presentable = (function(window) {
         },
 
         init: function(userOptions) {
-            var tocSlideData, tocContainer, iconContainer;
+            var tocSlideData, toc, tocContainer, iconContainer;
 
             try {
                 main.configure(userOptions);
@@ -58,7 +58,7 @@ var presentable = (function(window) {
                 iconContainer = document.querySelector(main.options.iconContainer);
 
                 html.init(main.options);
-                html.createRecursive(tocContainer, main.options.data.slides);
+                toc = html.createRecursive(document.createDocumentFragment(), main.options.data.slides);
 
                 if (main.options.keyCode !== false) {
                     main.enableKeyboardNavigation(tocSlideData);
@@ -70,6 +70,7 @@ var presentable = (function(window) {
 
                 main.enableOnClickNavigation(tocContainer);
 
+                tocContainer.appendChild(toc);
             }
             catch(e) {
                 log("Presentable: " + e.message);
@@ -351,6 +352,7 @@ var presentable = (function(window) {
                     this.createRecursive(li, tocArray[i].nested)
                 }
             }
+            return listParent;
         }
     };
 
@@ -374,8 +376,11 @@ var presentable = (function(window) {
         },
 
         extend: function(a, b) {
-            for( var i in b ) {
-                a[ i ] = b[ i ];
+            var i;
+            for (i in b) {
+                if (b.hasOwnProperty(i)) {
+                    a[i] = b[i];
+                }
             }
         }
     };
@@ -386,4 +391,4 @@ var presentable = (function(window) {
         slideTitle: main.slideTitlesRecursive
     };
 
-})(window);
+})(window, document);
