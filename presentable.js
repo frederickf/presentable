@@ -138,7 +138,7 @@ var presentable = (function(window, document) {
                 }
 
                 if (tocArray[i].nested) {
-                    return main.tocSlideDataRecursive(tocArray[i].nested)
+                    return main.tocSlideDataRecursive(tocArray[i].nested);
                 }
             }
             throw {message: 'Table of Contents container not found in presentation.'};
@@ -349,7 +349,7 @@ var presentable = (function(window, document) {
                 ol.appendChild(li);
 
                 if (tocArray[i].nested) {
-                    this.createRecursive(li, tocArray[i].nested)
+                    this.createRecursive(li, tocArray[i].nested);
                 }
             }
             return listParent;
@@ -363,13 +363,13 @@ var presentable = (function(window, document) {
 
             if (!parentElement.id) {
                 tempId = 'tempId_' + Math.floor(Math.random() * 1000 * new Date().getUTCMilliseconds());
-                parentElement.id = tempId
+                parentElement.id = tempId;
             }
 
             child = parentElement.querySelector('#' + parentElement.id + ' > ' + childSelector);
 
             if (tempId) {
-                parentElement.id = '';
+                parentElement.removeAttribute('id');
             }
 
             return child;
