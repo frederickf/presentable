@@ -1,0 +1,19 @@
+{
+  "name": "presentable",
+  "version": "1.0.0",
+  "description": "A table of contents for HTML presentations",
+  "main": "presentable.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frederickf/presentable.git"
+  },
+  "author": "Frederick C. Feibel",
+  "license": "MIT Licence",
+  "bugs": {
+    "url": "https://github.com/frederickf/presentable/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.4"
+  }
+}
