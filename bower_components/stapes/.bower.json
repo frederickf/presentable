@@ -1,0 +1,16 @@
+{
+  "name": "stapes",
+  "version": "0.8.0",
+  "main": "./stapes.js",
+  "homepage": "https://github.com/hay/stapes",
+  "_release": "0.8.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.8.0",
+    "commit": "65e13a77e438782f963353e5686830ea17572c23"
+  },
+  "_source": "git://github.com/hay/stapes.git",
+  "_target": "~0.8.0",
+  "_originalSource": "stapes",
+  "_direct": true
+}
