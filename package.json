@@ -15,6 +15,7 @@
   "devDependencies": {
     "grunt": "0.4.1",
     "grunt-contrib-jshint": "0.6.4",
-    "amdclean": "0.2.6"
+    "amdclean": "0.2.6",
+    "grunt-contrib-requirejs": "0.4.1"
   }
 }

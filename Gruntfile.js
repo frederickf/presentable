@@ -13,9 +13,29 @@ module.exports = function(grunt) {
                 }
             },
             presentable: ['presentable.js']
+        },
+        requirejs: {
+            js: {
+                options: {
+                    name: 'main',
+                    baseUrl: 'src',
+                    wrap: {
+                        start: '(function(window, document) {',
+                        end: '}(window, document) );'
+                    },
+                    optimize: 'none',
+                    mainConfigFile: 'src/requireConfig.js',
+                    out: 'dist/presentable.js',
+                    skipModuleInsertion: true,
+                    onBuildWrite: function( name, path, contents ) {
+                        return require('amdclean').clean(contents);
+                    }
+                }
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
 
 };
