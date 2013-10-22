@@ -17,30 +17,16 @@ module.exports = function(grunt) {
         requirejs: {
             js: {
                 options: {
-                    findNestedDependencies: true,
+                    name: 'main',
                     baseUrl: 'src',
-                    wrap: true,
-                    preserveLicenseComments: false,
+                    wrap: {
+                        start: '(function(window, document) {',
+                        end: '}(window, document) );'
+                    },
                     optimize: 'none',
                     mainConfigFile: 'src/requireConfig.js',
-                    include: ['main'],
                     out: 'dist/presentable.js',
                     skipModuleInsertion: true,
-                    onBuildWrite: function( name, path, contents ) {
-                        return require('amdclean').clean(contents);
-                    }
-                }
-            },
-            js2: {
-                options: {
-                    findNestedDependencies: true,
-                    baseUrl: 'src',
-                    wrap: true,
-                    preserveLicenseComments: false,
-                    optimize: 'none',
-                    mainConfigFile: 'src/requireConfig.js',
-                    include: ['main'],
-                    out: 'dist/presentable2.js',
                     onBuildWrite: function( name, path, contents ) {
                         return require('amdclean').clean(contents);
                     }

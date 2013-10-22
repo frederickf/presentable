@@ -1,4 +1,4 @@
-(function () {
+(function(window, document) {
 var html = function () {
         return {
             HASH_STRING: '',
@@ -284,4 +284,5 @@ var controller = function (html, json, util) {
     }(html, json, util);
 (function (controller) {
     window.presentable = controller;
-}(controller));}());
+}(controller));
+}(window, document) );
