@@ -5,12 +5,23 @@ define('json', [], function() {
         UNTITLED_SLIDE_TEXT: '',
         TOC_CONTAINER: '',
 
+        /**
+         * public: controller.js
+         *
+         * @param options
+         */
         init: function(options) {
             this.TITLE_SEARCH_STRING = options.titles;
             this.UNTITLED_SLIDE_TEXT = options.noTitle;
             this.TOC_CONTAINER = options.tocContainer;
         },
 
+        /**
+         * private
+         *
+         * @param slide
+         * @returns {string}
+         */
         slideTitle: function(slide) {
             var titleElement = slide.querySelector(this.TITLE_SEARCH_STRING);
             if (titleElement) {
@@ -21,16 +32,27 @@ define('json', [], function() {
             }
         },
 
+        /**
+         * private
+         *
+         * @param slide
+         * @returns {Node}
+         */
         isTocSlide: function(slide) {
             return slide.querySelector(this.TOC_CONTAINER);
         },
 
-        create: function(data) {
+        /**
+         * public: controller.js, json.js
+         *
+         * @param data
+         */
+        create: function() {
             var slides, slideCount, slideData, tocArray, i;
             slides = document.querySelectorAll(this.SLIDE_SEARCH_STRING);
-            tocArray = data.slides;
 
             slideCount = slides.length;
+            tocArray = [];
             for (i = 0; i < slideCount; i++) {
                 slideData = {};
                 slideData.index = this.slideIndex(slides[i], i);
@@ -40,6 +62,7 @@ define('json', [], function() {
                 }
                 tocArray.push(slideData);
             }
+            return tocArray;
         }
     };
 
