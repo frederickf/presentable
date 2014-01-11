@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=792, user-scalable=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<link rel="stylesheet" href="shower/themes/ribbon/styles/screen.css">
+    <link rel="stylesheet" href="../../src/presentable.css">
 </head>
 <body class="list">
 	<header class="caption">
@@ -39,6 +40,13 @@
 					}
 		</style>
 	</div></section>
+    <section class="slide"><div>
+        <h2>Table Of Contents</h2>
+        <nav id="presentable-toc" class="shower"></nav>
+    </div></section>
+    <section class="slide"><div>
+        <p>Untitled slide</p>
+    </div></section>
 	<section class="slide"><div>
 		<h2>Shower Key Features</h2>
 		<ol>
@@ -169,7 +177,19 @@
 		just remove “progress” element.
 		-->
 	<div class="progress"><div></div></div>
+    <div id="presentable-icon" class="shower">
+        <a title="Table of Contents" href="#3">
+            <img alt="Table of Contents" src="path/to/shower.png"/>
+        </a>
+    </div>
 	<script src="shower/shower.min.js"></script>
+    <script src="../../dist/presentable.js"></script>
+    <script>
+        presentable.toc({
+            framework: "shower",
+            hideNoTitle: true
+        })
+    </script>
 	<!-- Copyright © 2013 Yours Truly, Famous Inc. -->
 	<!-- Photos by John Carey, fiftyfootshadows.net -->
 </body>

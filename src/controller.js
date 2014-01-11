@@ -7,6 +7,7 @@ define('controller', ['html', 'json','util'], function(html, json, util) {
                 iconContainer: "#presentable-icon",
                 keyCode: 84,
                 noTitle: "Untitled Slide",
+                hideNoTitle: false,
                 reload: false,
                 titles: "h1,h2,h3,.presentable-title",
                 tocContainer: "#presentable-toc",

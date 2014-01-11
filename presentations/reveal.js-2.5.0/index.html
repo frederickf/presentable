@@ -66,8 +66,8 @@
 
 				<!-- Example of nested vertical slides -->
 				<section>
+                    <h2>Parent title</h2>
 					<section>
-						<h2>Vertical Slides</h2>
 						<p>
 							Slides can be nested inside of other slides,
 							try pressing <a href="#" class="navigate-down">down</a>.
@@ -94,6 +94,10 @@
 							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
 						</a>
 					</section>
+                    <section>
+                        <p>This is an untitled slide.</p>
+                        <p>If the Presentable hideNotitle option is set to true this slide should not appear in the TOC.</p>
+                    </section>
 				</section>
 
 				<section>
@@ -384,7 +388,7 @@ function linkify( selector ) {
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
 					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
 					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
-                    { src: '../../dist/presentable.js', async: true, callback: function() { presentable.toc({framework: "revealjs"}); } }
+                    { src: '../../dist/presentable.js', async: true, callback: function() { presentable.toc({framework: "revealjs",  hideNoTitle: true}); } }
 				]
 			});
 
