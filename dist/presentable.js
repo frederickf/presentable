@@ -4,12 +4,17 @@ var html = function () {
             HASH_STRING: '',
             init: function (options) {
                 this.HASH_STRING = options.urlHash;
+                this.HIDE_NO_TITLE = options.hideNoTitle;
+                this.NO_TITLE_TEXT = options.noTitle;
             },
             createRecursive: function (listParent, tocArray) {
                 var ol, li, url, i;
                 ol = document.createElement('ol');
                 listParent.appendChild(ol);
                 for (i = 0; i < tocArray.length; i++) {
+                    if (this.HIDE_NO_TITLE && tocArray[i].title === this.NO_TITLE_TEXT) {
+                        continue;
+                    }
                     li = document.createElement('li');
                     url = this.HASH_STRING + tocArray[i].index;
                     li.innerHTML = '<div><a class="title" href="' + url + '">' + tocArray[i].title + '</a> <a class="index" href="' + url + '" >' + tocArray[i].index + '</a></div>';
@@ -44,10 +49,10 @@ var json = function () {
             isTocSlide: function (slide) {
                 return slide.querySelector(this.TOC_CONTAINER);
             },
-            create: function (data) {
+            create: function () {
                 var slides, slideCount, slideData, tocArray, i;
                 slides = document.querySelectorAll(this.SLIDE_SEARCH_STRING);
-                tocArray = data.slides;
+                tocArray = [];
                 slideCount = slides.length;
                 for (i = 0; i < slideCount; i++) {
                     slideData = {};
@@ -58,21 +63,24 @@ var json = function () {
                     }
                     tocArray.push(slideData);
                 }
+                return tocArray;
             }
         };
         json.frameworks = {};
         json.frameworks.revealjs = {
             SLIDE_SEARCH_STRING: '.slides > section',
             options: { urlHash: '#/' },
-            create: function (data) {
-                var sections, sectionCount, i;
+            create: function () {
+                var sections, sectionCount, tocArray, i;
                 sections = document.querySelectorAll(this.SLIDE_SEARCH_STRING);
+                tocArray = [];
                 sectionCount = sections.length;
                 for (i = 0; i < sectionCount; i++) {
-                    this.processSectionRecursive(i, sections[i], data.slides);
+                    this.processSectionRecursive(i, sections[i], tocArray);
                 }
-                this.removeNestedDupicatesByTitles(data.slides);
-                this.removeUntitledFirstChild(data.slides);
+                this.removeNestedDuplicatesByTitles(tocArray);
+                this.removeUntitledFirstChild(tocArray);
+                return tocArray;
             },
             isTocSlide: function (slide) {
                 return util.querySelectorChild(slide, this.TOC_CONTAINER);
@@ -108,7 +116,7 @@ var json = function () {
                 }
                 return this.UNTITLED_SLIDE_TEXT;
             },
-            removeNestedDupicatesByTitles: function (tocArray) {
+            removeNestedDuplicatesByTitles: function (tocArray) {
                 for (var i = 0; i < tocArray.length; i++) {
                     if (tocArray[i].nested && tocArray[i].title === tocArray[i].nested[0].title) {
                         tocArray[i].nested.shift();
@@ -177,6 +185,7 @@ var controller = function (html, json, util) {
                     iconContainer: '#presentable-icon',
                     keyCode: 84,
                     noTitle: 'Untitled Slide',
+                    hideNoTitle: false,
                     reload: false,
                     titles: 'h1,h2,h3,.presentable-title',
                     tocContainer: '#presentable-toc',
@@ -189,7 +198,7 @@ var controller = function (html, json, util) {
                         if (main.options.data.slides.length === 0) {
                             util.extend(json, json.frameworks[main.options.framework]);
                             json.init(main.options);
-                            json.create(main.options.data);
+                            main.options.data.slides = json.create();
                         }
                         tocSlideData = main.tocSlideDataRecursive(main.options.data.slides);
                         tocContainer = document.querySelector(main.options.tocContainer);
@@ -284,5 +293,4 @@ var controller = function (html, json, util) {
     }(html, json, util);
 (function (controller) {
     window.presentable = controller;
-}(controller));
-}(window, document) );
+}(controller));}(window, document) );

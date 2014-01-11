@@ -50,9 +50,9 @@ define('json', [], function() {
         create: function() {
             var slides, slideCount, slideData, tocArray, i;
             slides = document.querySelectorAll(this.SLIDE_SEARCH_STRING);
+            tocArray = [];
 
             slideCount = slides.length;
-            tocArray = [];
             for (i = 0; i < slideCount; i++) {
                 slideData = {};
                 slideData.index = this.slideIndex(slides[i], i);
@@ -62,6 +62,7 @@ define('json', [], function() {
                 }
                 tocArray.push(slideData);
             }
+
             return tocArray;
         }
     };
@@ -73,17 +74,20 @@ define('json', [], function() {
         options: {
             urlHash: "#/"
         },
-        create: function(data) {
-            var sections, sectionCount, i;
+        create: function() {
+            var sections, sectionCount, tocArray, i;
             sections = document.querySelectorAll(this.SLIDE_SEARCH_STRING);
+            tocArray = [];
 
             sectionCount = sections.length;
             for (i = 0; i < sectionCount; i++) {
-                this.processSectionRecursive(i, sections[i], data.slides);
+                this.processSectionRecursive(i, sections[i], tocArray);
             }
 
-            this.removeNestedDupicatesByTitles(data.slides);
-            this.removeUntitledFirstChild(data.slides);
+            this.removeNestedDuplicatesByTitles(tocArray);
+            this.removeUntitledFirstChild(tocArray);
+
+            return tocArray;
         },
 
         isTocSlide: function(slide) {
@@ -144,7 +148,7 @@ define('json', [], function() {
             return this.UNTITLED_SLIDE_TEXT;
         },
 
-        removeNestedDupicatesByTitles: function (tocArray) {
+        removeNestedDuplicatesByTitles: function (tocArray) {
             for (var i = 0; i < tocArray.length; i++) {
                 if ( tocArray[i].nested && (tocArray[i].title === tocArray[i].nested[0].title) ) {
                     tocArray[i].nested.shift();
