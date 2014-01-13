@@ -25,7 +25,7 @@ define('json', [], function() {
         slideTitle: function(slide) {
             var titleElement = slide.querySelector(this.TITLE_SEARCH_STRING);
             if (titleElement) {
-                return titleElement.textContent;
+                return titleElement.textContent.replace(/</g, '&lt;');
             }
             else {
                 return this.UNTITLED_SLIDE_TEXT;
@@ -201,6 +201,16 @@ define('json', [], function() {
 
     json.frameworks.html5slides = {
         SLIDE_SEARCH_STRING: 'article',
+        options: {
+            reload: true
+        },
+        slideIndex: function(slide, i) {
+            return i + 1;
+        }
+    };
+
+    json.frameworks.io2012slides = {
+        SLIDE_SEARCH_STRING: 'slide:not([hidden=""])',
         options: {
             reload: true
         },
