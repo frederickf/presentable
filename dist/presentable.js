@@ -166,7 +166,10 @@ var json = function () {
         json.frameworks.impressjs = {
             SLIDE_SEARCH_STRING: '.step',
             slideIndex: function (slide, i) {
-                return slide.id;
+                if (slide.id) {
+                    return slide.id;
+                }
+                return 'step-' + (i + 1);
             }
         };
         return json;
