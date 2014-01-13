@@ -107,7 +107,7 @@ var json = function () {
             slideTitleRecursive: function (slide) {
                 var firstTitle, childSlide;
                 firstTitle = slide.querySelector(this.TITLE_SEARCH_STRING);
-                if (firstTitle) {
+                if (firstTitle && firstTitle.parentNode === slide) {
                     return firstTitle.textContent;
                 }
                 childSlide = slide.querySelector('section');
@@ -117,16 +117,28 @@ var json = function () {
                 return this.UNTITLED_SLIDE_TEXT;
             },
             removeNestedDuplicatesByTitles: function (tocArray) {
-                for (var i = 0; i < tocArray.length; i++) {
-                    if (tocArray[i].nested && tocArray[i].title === tocArray[i].nested[0].title) {
-                        tocArray[i].nested.shift();
+                var i, parentSlide, firstChildSlide;
+                for (i = 0; i < tocArray.length; i++) {
+                    parentSlide = tocArray[i];
+                    if (!parentSlide.nested) {
+                        continue;
+                    }
+                    firstChildSlide = parentSlide.nested[0];
+                    if (parentSlide.title === firstChildSlide.title && firstChildSlide.title !== this.UNTITLED_SLIDE_TEXT) {
+                        parentSlide.nested.shift();
                     }
                 }
             },
             removeUntitledFirstChild: function (tocArray) {
-                for (var i = 0; i < tocArray.length; i++) {
-                    if (tocArray[i].nested && tocArray[i].nested[0].title === this.UNTITLED_SLIDE_TEXT) {
-                        tocArray[i].nested.shift();
+                var i, parentSlide, firstChildSlide;
+                for (i = 0; i < tocArray.length; i++) {
+                    parentSlide = tocArray[i];
+                    if (!parentSlide.nested) {
+                        continue;
+                    }
+                    firstChildSlide = parentSlide.nested[0];
+                    if (firstChildSlide.title === this.UNTITLED_SLIDE_TEXT) {
+                        parentSlide.nested.shift();
                     }
                 }
             }
