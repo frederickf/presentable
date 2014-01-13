@@ -2,6 +2,18 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        copy: {
+            icons: {expand: true, cwd: 'src/', src: ['icons/**'], dest: 'dist/'}
+        },
+        cssmin: {
+            minify: {
+                expand: true,
+                cwd: 'src/',
+                src: ['*.css', '!*.min.css'],
+                dest: 'dist/',
+                ext: '.css'
+            }
+        },
         jshint: {
             options: {
                 curly: true,
@@ -12,7 +24,7 @@ module.exports = function(grunt) {
                     jQuery: true
                 }
             },
-            presentable: ['presentable.js']
+            src: 'src/*.js'
         },
         requirejs: {
             js: {
@@ -23,7 +35,7 @@ module.exports = function(grunt) {
                         start: '(function(window, document) {',
                         end: '}(window, document) );'
                     },
-                    optimize: 'none',
+                    //optimize: 'none',
                     mainConfigFile: 'src/requireConfig.js',
                     out: 'dist/presentable.js',
                     skipModuleInsertion: true,
@@ -35,7 +47,16 @@ module.exports = function(grunt) {
         }
     });
 
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+
+    grunt.registerTask("build", [
+        'copy:icons',
+        'cssmin:minify',
+        'jshint:src',
+        'requirejs:js'
+    ]);
 
 };
