@@ -98,6 +98,7 @@ define('json', [], function() {
          * 1. Parent has title, 1st child does not
          *    ** Use parent title, omit child
          *    ** removeUntitledFirstChild()
+         *    ** see https://github.com/hakimel/reveal.js/issues/651
          * 2. 1st Child has title, parent does not
          *    ** Use child title for parent and child, omit child as duplicate
          *    ** removeNestedDupicatesByTitles()
@@ -131,12 +132,19 @@ define('json', [], function() {
             }
         },
 
+        /**
+         * Returns parent title or if parent has no title 1st child with title
+         * or if no title found returns no title text
+         *
+         * @param slide
+         * @returns {*}
+         */
         slideTitleRecursive: function(slide) {
             var firstTitle, childSlide;
 
             // textContent =< ie9, consider using innerText too if < ie9 important
             firstTitle = slide.querySelector(this.TITLE_SEARCH_STRING);
-            if (firstTitle) {
+            if (firstTitle && (firstTitle.parentNode === slide) ) {
                 return firstTitle.textContent;
             }
 
@@ -148,18 +156,44 @@ define('json', [], function() {
             return this.UNTITLED_SLIDE_TEXT;
         },
 
+        /**
+         * If 1st child has title and parent does not child's title is assigned to parent
+         * This method removes now duplicated 1st child title
+         *
+         * @param tocArray
+         */
         removeNestedDuplicatesByTitles: function (tocArray) {
-            for (var i = 0; i < tocArray.length; i++) {
-                if ( tocArray[i].nested && (tocArray[i].title === tocArray[i].nested[0].title) ) {
-                    tocArray[i].nested.shift();
+            var i, parentSlide, firstChildSlide;
+
+            for (i = 0; i < tocArray.length; i++) {
+                parentSlide = tocArray[i];
+                if (!parentSlide.nested) {continue;}
+
+                firstChildSlide = parentSlide.nested[0];
+                // testing that 1st child not untitled necessary because removeUntitledFirstChild() will handle that case
+                if ( (parentSlide.title === firstChildSlide.title) && (firstChildSlide.title !== this.UNTITLED_SLIDE_TEXT) ) {
+                    parentSlide.nested.shift();
                 }
+
             }
         },
 
+        /**
+         * Due to slideTitleRecursive() parent and 1st child will have same title if parent or both
+         * have no title. This removes child from toc in that case.
+         *
+         * @param tocArray
+         */
         removeUntitledFirstChild: function (tocArray) {
-            for (var i = 0; i < tocArray.length; i++) {
-                if ( tocArray[i].nested && (tocArray[i].nested[0].title === this.UNTITLED_SLIDE_TEXT) ) {
-                    tocArray[i].nested.shift();
+            var i, parentSlide, firstChildSlide;
+
+            for (i = 0; i < tocArray.length; i++) {
+                parentSlide = tocArray[i];
+                if (!parentSlide.nested) {continue;}
+
+                firstChildSlide = parentSlide.nested[0];
+                if ( firstChildSlide.title === this.UNTITLED_SLIDE_TEXT ) {
+                    parentSlide.nested.shift();
                 }
             }
         }

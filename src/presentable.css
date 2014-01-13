@@ -96,6 +96,11 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     visibility: hidden;
 }
 
+#reveal #presentable-icon,
+.reveal #presentable-icon {
+    z-index: 30;
+}
+
 #reveal #presentable-icon a:hover img,
 .reveal #presentable-icon a:hover img {
     border-color: #13daec;
