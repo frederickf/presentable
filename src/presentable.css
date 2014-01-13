@@ -113,7 +113,11 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     height: 540px;
 }
 
-/* html5slides
+#presentable-toc.html5slides li div {
+    border-bottom: 1px dotted #000
+}
+
+/* io2012slides
 ======================================================================================================================*/
 #presentable-toc.io2012slides {
     height: 500px;
