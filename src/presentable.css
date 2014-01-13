@@ -133,8 +133,13 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     height: 340px;
     font-size: 80%;
 }
+
 #presentable-toc.shower ol {
     counter-reset: tocIndex;
+}
+
+#presentable-toc.shower ol li, #presentable-toc.shower ul li {
+    text-indent: 0;
 }
 
 #presentable-toc.shower li div {
