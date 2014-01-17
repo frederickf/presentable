@@ -17,7 +17,7 @@
 		<link rel="stylesheet" href="css/reveal.min.css">
 		<link rel="stylesheet" href="css/theme/default.css" id="theme">
 
-        <link rel="stylesheet" href="../../dist/presentable.css">
+        <link rel="stylesheet" href="../../dist/presentable.min.css">
 
 		<!-- For syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -388,7 +388,7 @@ function linkify( selector ) {
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
 					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
 					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
-                    { src: '../../dist/presentable.js', async: true, callback: function() { presentable.toc({framework: "revealjs"}); } }
+                    { src: '../../dist/presentable.min.js', async: true, callback: function() { presentable.toc({framework: "revealjs"}); } }
 				]
 			});
 
