@@ -92,9 +92,9 @@ define('controller', ['html', 'json','util'], function(html, json, util) {
                     event.preventDefault();
 
                     target = event.target;
-                    while (container != target) {
+                    while (container !== target) {
                         // For some reason IE10 confusses img.src with a.href
-                        if (target.href && target.tagName == "A") {
+                        if (target.href && target.tagName === "A") {
                             main.goToSlide(target.href);
                             break;
                         }
@@ -111,7 +111,7 @@ define('controller', ['html', 'json','util'], function(html, json, util) {
             enableKeyboardNavigation: function(tocSlideData) {
                 window.document.body.addEventListener('keyup', function(event) {
                     var keyPressed;
-                    if (event.target.tagName == "INPUT" || event.target.tagName == "TEXTAREA" ||
+                    if (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA" ||
                         event.altKey || event.ctrlKey || event.metaKey) {
                         return;
                     }
@@ -158,7 +158,7 @@ define('controller', ['html', 'json','util'], function(html, json, util) {
                 tocArray = tocArray || main.options.data.slides;
 
                 for (var i = 0; i < tocArray.length; i++) {
-                    if (tocArray[i].index == index) {
+                    if (tocArray[i].index === index) {
                         title = tocArray[i].title;
                     }
 

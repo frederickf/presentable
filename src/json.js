@@ -1,4 +1,4 @@
-define('json', [], function() {
+define('json', ['util'], function(util) {
     var json = {};
     json = {
         TITLE_SEARCH_STRING: '',
@@ -44,8 +44,6 @@ define('json', [], function() {
 
         /**
          * public: controller.js, json.js
-         *
-         * @param data
          */
         create: function() {
             var slides, slideCount, slideData, tocArray, i;
@@ -221,7 +219,7 @@ define('json', [], function() {
 
     json.frameworks.shower = {
         SLIDE_SEARCH_STRING: '.slide',
-        slideIndex: function(slide, i) {
+        slideIndex: function(slide) {
             return slide.id;
         }
     };

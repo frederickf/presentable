@@ -28,13 +28,22 @@ module.exports = function(grunt) {
         },
         jshint: {
             options: {
+                browser: true,
+                camelcase: true,
                 curly: true,
                 eqeqeq: true,
                 eqnull: true,
-                browser: true,
                 globals: {
-                    jQuery: true
-                }
+                    console: true,
+                    define: true,
+                    require: true,
+                    requirejs: true
+                },
+                indent: 4,
+                latedef: true,
+                newcap: true,
+                undef: true,
+                unused: true
             },
             src: 'src/*.js'
         },
@@ -68,7 +77,7 @@ module.exports = function(grunt) {
     grunt.registerTask("build", [
         'copy:icons',
         'cssmin:minify',
-        //'jshint:src',
+        'jshint:src',
         'requirejs:js',
         'concat:license'
     ]);
