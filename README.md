@@ -25,7 +25,7 @@ These are generic instructions for installing.  See the [official documentation]
 ### CSS
 Add the CSS in the &lt;head&gt; tag.
 
-    <link rel="stylesheet" href="path/to/presentable.css">
+    <link rel="stylesheet" href="path/to/presentable.min.css">
 
 ### HTML
 Wrap the following HTML in a slide.
@@ -44,7 +44,7 @@ And add this as a child of the &lt;body&gt; tag.
 ### JavaScript
 Reference presentable.js following the conventions set by your framework of choice.
 
-    <script src="path/to/presentable.js"></script>
+    <script src="path/to/presentable.min.js"></script>
 
 ### Initialize
 This goes <em>after</em> all the slides.
@@ -61,4 +61,3 @@ It can also accept other configuration options allowing Presentable to support a
 
 ## Learn More
 See examples and instructions: [http://fcfeibel.com/presentable/](http://fcfeibel.com/presentable/)
-
