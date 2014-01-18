@@ -15,9 +15,6 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "stapes": "0.8.0"
-  },
   "devDependencies": {
     "requirejs": "2.1.9"
   }
