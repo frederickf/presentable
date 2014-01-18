@@ -12,11 +12,12 @@ The following presentation frameworks are supported out of the box, and Presenta
 
 * [Reveal.js](https://github.com/hakimel/reveal.js)
 * [html5slides](http://code.google.com/p/html5slides/)
+* [io-2012-slides (formerly html5slides)](https://code.google.com/p/io-2012-slides/)
 * [Shower](https://github.com/pepelsbey/shower)
 * [impress.js](https://github.com/bartaz/impress.js/)
 
 ## Browser Support
-Currently Presentable has been tested and works in Firefox, Chrome, Safari, IE9/10, and the default browser on my HTC G2 Android phone.
+Presentable should work in Firefox, Chrome, Safari, and IE9/10. If it doesn't open an issue.
 
 ## Generic Instructions
 These are generic instructions for installing.  See the [official documentation](http://fcfeibel.com/presentable/) for presentation specific instructions.
@@ -24,7 +25,7 @@ These are generic instructions for installing.  See the [official documentation]
 ### CSS
 Add the CSS in the &lt;head&gt; tag.
 
-    <link rel="stylesheet" href="path/to/presentable.css">
+    <link rel="stylesheet" href="path/to/presentable.min.css">
 
 ### HTML
 Wrap the following HTML in a slide.
@@ -43,7 +44,7 @@ And add this as a child of the &lt;body&gt; tag.
 ### JavaScript
 Reference presentable.js following the conventions set by your framework of choice.
 
-    <script src="path/to/presentable.js"></script>
+    <script src="path/to/presentable.min.js"></script>
 
 ### Initialize
 This goes <em>after</em> all the slides.
@@ -60,4 +61,3 @@ It can also accept other configuration options allowing Presentable to support a
 
 ## Learn More
 See examples and instructions: [http://fcfeibel.com/presentable/](http://fcfeibel.com/presentable/)
-

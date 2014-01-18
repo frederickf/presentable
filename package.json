@@ -1,6 +1,6 @@
 {
   "name": "presentable",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A table of contents for HTML presentations",
   "main": "presentable.js",
   "repository": {
@@ -13,7 +13,12 @@
     "url": "https://github.com/frederickf/presentable/issues"
   },
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.6.4"
+    "grunt": "0.4.1",
+    "grunt-contrib-jshint": "0.6.4",
+    "amdclean": "~0.4.0",
+    "grunt-contrib-requirejs": "0.4.1",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-cssmin": "~0.7.0",
+    "grunt-contrib-concat": "~0.3.0"
   }
 }

@@ -1,0 +1,22 @@
+/* boring Legal Stuff
+ ***********************************************************************************************************************
+ Copyright (c) 2012, Frederick C. Feibel
+ All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
+ following conditions are met:
+
+ Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+ disclaimer.
+ Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
+ disclaimer in the documentation and/or other materials provided with the distribution.
+
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ **********************************************************************************************************************/
+#presentable-toc{height:600px;overflow:auto}#presentable-toc ol,#reveal #presentable-toc ol{display:block;margin:.6em 0 1.2em;padding:0}#presentable-toc ol,#presentable-toc ul,#reveal #presentable-toc ol,#reveal #presentable-toc ul{list-style:none}#presentable-toc ol ol,#presentable-toc ol ul,#reveal #presentable-toc ol ol,#reveal #presentable-toc ol ul{margin-bottom:.5em;margin-top:.5em;margin-left:1.5em}#presentable-toc li,#reveal #presentable-toc li{margin:0 0 .2em;padding:0}#presentable-toc li:before{content:normal}#presentable-toc li div{border-bottom:1px dotted #fff;width:98%}#presentable-toc li .index{float:right;text-align:right}#presentable-toc li a,#reveal #presentable-toc li a{text-decoration:none}#presentable-icon{position:absolute;top:10px;left:10px}#presentable-icon a{outline:0}#presentable-icon img{border:1px solid #666;outline:0}#reveal .slides .future,.reveal .slides .future{visibility:hidden}#reveal #presentable-icon,.reveal #presentable-icon{z-index:30}#reveal #presentable-icon a:hover img,.reveal #presentable-icon a:hover img{border-color:#13daec}#presentable-toc.html5slides{height:540px}#presentable-toc.html5slides li div{border-bottom:1px dotted #000}#presentable-toc.io2012slides{height:500px}#presentable-toc.io2012slides li div{border-bottom:1px dotted #000}#presentable-toc.io2012slides li a{border-bottom:0}#presentable-toc.shower{height:340px;font-size:80%}#presentable-toc.shower ol{counter-reset:tocIndex}#presentable-toc.shower ol li,#presentable-toc.shower ul li{text-indent:0}#presentable-toc.shower li div{border-color:#000}#presentable-toc.shower a{border:0}#presentable-toc.shower li .title:after{counter-increment:tocIndex;content:counter(tocIndex,decimal-leading-zero);float:right;color:#bbb}#presentable-toc.shower .index,.cover #presentable-icon.shower,.list #presentable-icon.shower{display:none}#presentable-icon.shower img{border-color:#bbb}#presentable-icon.impressjs{pointer-events:auto}#presentable-icon.impressjs a{background:0 0}#presentable-toc.impressjs ol{counter-reset:tocIndex}#presentable-toc.impressjs div{line-height:1}#presentable-toc.impressjs li .title:after{counter-increment:tocIndex;content:counter(tocIndex,decimal-leading-zero);float:right;color:#bbb}#presentable-toc.impressjs li .title{font-size:35px}#presentable-toc.impressjs .index{display:none}
