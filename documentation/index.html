@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+        <title>Presentable: A Table of Contents for HTML Presentations including reveal.js, html5slides, io-2012-slides, Shower, impress.js and more!</title>
+
+        <meta name="description" content="A Table of Contents for<br> HTML Presentations">
+        <meta name="author" content="Frederick C. Feibel">
+        <link href="../fcfeibel/styles/favicon.ico" rel="shortcut icon">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="supported-frameworks/reveal.js/css/reveal.min.css">
+		<link rel="stylesheet" href="supported-frameworks/reveal.js/css/theme/default.css" id="theme">
+        <link rel="stylesheet" href="presentable/presentable.min.css">
+        <link rel="stylesheet" href="custom.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="supported-frameworks/reveal.js/lib/css/zenburn.css">
+        
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="supported-frameworks/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="supported-frameworks/reveal.js/lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+                    <section id="presentable" class="bookend">
+                        <h1>Presentable</h1>
+                        <h2>A Table of Contents for<br> HTML Presentations</h2>
+                        <p><em>Spacebar</em> to go forward,<br><em>p</em> to go backwards,
+                            <br><a href="#/0/1"><em>Presentable</em></a> to go anywhere!</p>
+                    </section>
+                    <section>
+                        <h2>Table of Contents</h2>
+                        <nav id="presentable-toc"></nav>
+                    </section>
+				</section>
+
+				<section>
+                    <h2>Introduction</h2>
+                    <p>Presentable is a small script/plugin/widget/thingy that adds a table of contents to HTML based
+                    presentations that are all the rage these days. You can see an example of it in action in this very presentation.</p>
+
+                    <p>If you're interested in the presentation framework itself, which is kind of awesome, you should talk to
+                        <a href="http://hakim.se" title="Hakim El Hattab">this guy</a>.  He made it. It's called
+                    <a href="http://hakim.se/projects/reveal-js">Reveal.js</a> and as you may have heard, it's kind of awesome.</p>
+				</section>
+
+                <section>
+                    <h2>How Does Presentable Work?</h2>
+                    <p>I'm glad you asked.</p>
+                    <p>Presentable creates a table of contents by parsing the HTML of the presentation.  It's mainly looking for header tags,
+                        but you can identify other elements too as you'll see.</p>
+                    <p><a href="http://hakim.se/projects/reveal-js">Reveal.js</a>, <a href="http://code.google.com/p/html5slides/">html5slides</a>,
+                        <a href="https://code.google.com/p/io-2012-slides/">io-2012-slides</a>, <a href="https://github.com/pepelsbey/shower">Shower</a>
+                        and <a href="https://github.com/bartaz/impress.js/">impress.js</a> are supported out of the box and Presentable can theoretically
+                        <a href="#/7/1">handle</a> other frameworks, although your mileage may vary.</p>
+                    <p>Presentable should work modern browsers like Firefox, Chrome, Safari, WebKit et al and IE9/10</p>
+                </section>
+
+                <section>
+                    <h2>Installation - Reveal.js</h2>
+                    <section id="loadTheResources">
+                        <h3>CSS &amp; HTML</h3>
+                        <ol>
+                            <li>Place the following in the &lt;head&gt; tag:
+                                <pre><code>&lt;link rel="stylesheet" href="path/to/presentable.css"&gt;</code></pre>
+                            </li>
+                            <li>Modify the first &lt;section&gt; tag to look like this
+                                <pre><code>&lt;section&gt;
+    &lt;section&gt;
+        &lt;h1&gt;Your Presentation Title Here&lt;/h1&gt;
+        &lt;!-- Depending  on your version of reveal.js you may also
+        have a script tag in this section --&gt;
+    &lt;/section&gt;
+    &lt;section&gt;
+        &lt;h2&gt;Table of Contents&lt;/h2&gt;
+        &lt;nav id=&quot;presentable-toc&quot; class=&quot;revealjs&quot;&gt;&lt;/nav&gt;
+    &lt;/section&gt;
+&lt;/section&gt;</code></pre>
+                            </li>
+                            <li>Put the icon code below the <em>.slides</em> &lt;div&gt;
+                                <pre><code>&lt;/div&gt;&lt;!--this is the closing .slides div--&gt;
+
+&lt;aside id=&quot;presentable-icon&quot; class=&quot;revealjs&quot;&gt;
+    &lt;a title=&quot;Table of Contents&quot; href=&quot;#/0/1&quot;&gt;
+        &lt;img alt=&quot;Table of Contents&quot; src=&quot;path/to/revealjs.png&quot;/&gt;
+    &lt;/a&gt;
+&lt;/aside&gt;</code></pre>
+                            </li>
+                        </ol>
+                    </section>
+                    <section>
+                        <h3>JavaScript</h3>
+                            <ol class="faux">
+                            <li>4a. <strong>Versions <= 1.3:</strong> place the following towards the bottom of the presentation source code
+                                file with the other &lt;script&gt; tags:
+                                <pre><code>&lt;script src=&quot;path/to/presentable.js&quot;&gt;&lt;/script&gt;</code></pre>
+                            </li>
+
+                            <li>4b. <strong>Version 1.4:</strong> use <em>head.js()</em> to load <em>presentable.js</em> by adding <em>'path/to/presentable.js'</em> as
+                                demonstrated below:
+                                <pre><code>head.js( !document.body.classList ? 'lib/js/classList.js' : null )
+.js( 'js/reveal.js', 'path/to/presentable.js', function() {</code></pre>
+                            </li>
+
+                            <li>4c. <strong>Version 1.5:</strong> use Reveal.initialize() to extend the presentation framework.
+                                <pre><code>Reveal.initialize({
+    // Other configs...
+    dependencies: [
+        // Not all dependencies shown...
+        { src: 'lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        // presentable.js must come after data-markdown.js
+        { src: 'path/to/presentable.js', callback: function() { presentable.toc({framework: "revealjs"}); } }
+    ]
+});</code></pre>
+                            </li>
+                        </ol>
+                    </section>
+                    <section>
+                        <h3>Initialize</h3>
+                        <ol class="faux">
+                            <li>5a. <strong>Version <= 1.4:</strong> Place <em>presentable.toc()</em> before <em>Reveal.initialize()</em>
+                                <pre><code class="javascript">presentable.toc({
+    framework: "revealjs"
+});
+
+Reveal.initialize({...</code></pre>
+                                <p>The table of contents HTML must be in the DOM before Reveal is initialized so
+                                    that the fancy roling effect will be applied to the links in the table of contents.</p>
+                            </li>
+                            <li>5b. <strong>Version 1.5:</strong> Initialization is done with a callback function
+                            <pre><code>Reveal.initialize({
+    // Other configs...
+    dependencies: [
+        // Not all dependencies shown...
+        { src: 'path/to/presentable.js', callback: function() { window.presentable.toc({framework: "revealjs"}); } }
+    ]
+});</code></pre>
+                            </li>
+                        </ol>
+
+                        <p>See the <a href="#/7">Configuration</a> slide for more details on the object being passed
+                            to <em>presentable.toc()</em>.</p>
+                    </section>
+                </section>
+
+                <section id="installation-html5slides">
+                    <h2>Installation - html5slides</h2>
+                    <p class="example">(click <a href="supported-frameworks/html5slides/#3">here</a> for an example integration)</p>
+                    <ol>
+                        <li>Place the following in the &lt;head&gt; tag
+                            <pre><code>&lt;link rel="stylesheet" href="path/to/presentable.css"&gt;</code></pre>
+                        </li>
+                        <li>Add a slide where you want the table of contents to appear
+                            <pre><code>&lt;article&gt;
+    &lt;h3&gt;Table of Contents&lt;/h3&gt;
+    &lt;nav id=&quot;presentable-toc&quot; class=&quot;html5slides&quot;&gt;&lt;/nav&gt;
+&lt;/article&gt;</code></pre>
+
+                        </li>
+                        <li>Add icon code as a child of the &lt;body&gt; tag
+                           <pre><code>&lt;aside id=&quot;presentable-icon&quot; class=&quot;html5slides&quot;&gt;
+    &lt;a title=&quot;Table of Contents&quot; href=&quot;#3&quot;&gt;
+        &lt;img alt=&quot;Table of Contents&quot; src=&quot;path/to/html5slides.png&quot;/&gt;
+    &lt;/a&gt;
+&lt;/aside&gt;</code></pre>
+                        </li>
+                        <li>Place after all the &lt;article&gt; tags
+                            <pre><code>&lt;script src=&quot;path/to/presentable.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    presentable.toc({
+        framework: "html5slides"
+    })
+&lt/script&gt;</code></pre>
+                         </li>
+                    </ol>
+                </section>
+
+                <section id="Installation-Shower">
+                    <h2>Installation - Shower</h2>
+                    <section>
+                        <h3>CSS &amp; HTML</h3>
+                        <p class="example">(click <a href="supported-frameworks/shower/en.htm?full#TableOfContents">here</a> for an example integration)</p>
+                        <ol>
+                            <li>Place the following in the &lt;head&gt; tag
+                                <pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;path/to/presentable.css&quot;&gt;</code></pre>
+                            </li>
+                            <li>Add a slide where you want the table of contents to appear
+                                <pre><code>&lt;div class=&quot;slide&quot; id=&quot;TableOfContents&quot;&gt;
+    &lt;div&gt;
+        &lt;section&gt;
+            &lt;header&gt;
+                &lt;h2&gt;Table Of Contents&lt;/h2&gt;
+            &lt;/header&gt;
+            &lt;nav id=&quot;presentable-toc&quot; class=&quot;shower&quot;&gt;&lt;/nav&gt;
+        &lt;/section&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                            </li>
+                            <li>Add icon code as a child of the &lt;body&gt; tag
+                               <pre><code>&lt;div id=&quot;presentable-icon&quot class=&quot;shower&quot;&gt;
+    &lt;a title=&quot;Table of Contents&quot; href=&quot;#3&quot;&gt;
+        &lt;img alt=&quot;Table of Contents&quot; src=&quot;path/to/shower.png&quot;/&gt;
+    &lt;/a&gt;
+&lt;/div&gt;</code></pre>
+                            </li>
+                        </ol>
+                    </section>
+                    <section>
+                        <h3>JS &amp; Initialization</h3>
+                        <ol>
+                            <li>Place after all the <em>div.slide</em> tags
+                                <pre><code>&lt;script src=&quot;path/to/presentable.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    presentable.toc({
+        framework: "shower"
+    })
+&lt/script&gt;</code></pre>
+                            </li>
+                        </ol>
+                        <p>See the <a href="#/7">Configuration</a> slide for more details on the object being passed
+                            to <em>presentable.toc()</em>.</p>
+                    </section>
+                </section>
+
+                <section id="installation-Impressjs">
+                    <h2>Installation - impress.js</h2>
+                    <section>
+                        <h3>CSS &amp; HTML</h3>
+                        <p class="example">(click <a href="supported-frameworks/impress.js/#table-of-contents">here</a> for an example integration)</p>
+                        <ol>
+                            <li>Place the following in the &lt;head&gt; tag
+                                <pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;path/to/presentable.css&quot;&gt;</code></pre>
+                            </li>
+                            <li>Add a slide where you want the table of contents to appear
+                                <pre><code>&lt;div id=&quot;table-of-contents&quot; class=&quot;step&quot; data-x=&quot;?&quot; data-y=&quot;?&quot; data-scale=&quot;?&quot;&gt;
+    &lt;h2&gt;Table Of Contents&lt;/h2&gt;
+    &lt;nav id=&quot;presentable-toc&quot; class=&quot;impressjs&quot;&gt;&lt;/nav&gt;
+&lt;/div&gt;</code></pre>
+                            </li>
+                            <li>Add icon code as a child of the &lt;body&gt; tag
+                               <pre><code>&lt;div id=&quot;presentable-icon&quot; class=&quot;impressjs&quot;&gt;
+    &lt;a title=&quot;Table of Contents&quot; href=&quot;#table-of-contents&quot;&gt;
+        &lt;img alt=&quot;Table of Contents&quot; src=&quot;path/to/impressjs.png&quot;/&gt;
+    &lt;/a&gt;
+&lt;/div&gt;</code></pre>
+                            </li>
+                        </ol>
+                    </section>
+                    <section>
+                         <h3>JS &amp; Initialization</h3>
+                            <ol>
+                                <li>Place after all the <em>div.step</em> tags
+                                    <pre><code>&lt;script src=&quot;path/to/presentable.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    presentable.toc({
+        framework: "impressjs"
+    })
+&lt/script&gt;</code></pre>
+                                </li>
+                            </ol>
+                            <p>See the <a href="#/7">Configuration</a> slide for more details on the object being passed
+                                to <em>presentable.toc()</em>.</p>
+                    </section>
+                </section>
+                <section id="configuration">
+                    <h2>Configuration</h2>
+                    <section>
+                        <h3>Basic</h3>
+                        <p>Several configurations can be passed to <em>presentable.toc()</em>.  The options and
+                            their default values are demonstrated below.</p>
+                    <pre><code class="javascript">presentable.toc({
+    // Custom presentation structure. See following slide.
+    // "framework" is ignored
+    data: {"slides": []},
+
+    // Accepts "revealjs", "html5slides", "io-2012-slides", "shower", or "impressjs".
+    // "data" is ignored.
+    framework: "",
+
+    // keyCode used for keyboard navigation back to TOC slide.
+    keyCode: 84     // 84 = 't' key, false to disable
+
+    // Text displayed when no title is found. See following slide.
+    noTitle: "Untitled Slide"
+
+    // Untitled slides (see noTitle above) are excluded from TOC
+    hideNoTitle: false
+
+    // Reload when Presentable link is clicked. For frameworks without navigation API
+    reload: false,
+
+    // HTML IDs, classes, and elements to be considered slide titles
+    titles: "h1,h2,h3,.presentable-title",
+
+    // URL hash pattern
+    urlHash: "#"
+});</code></pre>
+                        <p><strong>"framework" or "data" is required.</strong> The rest are optional.</p>
+                    </section>
+                    <section id="OtherFrameworks">
+                        <h3>Other Frameworks</h3>
+                        <p>A JSON object can be passed to <em>presentable.toc()</em> making it possible to
+                            generate a table of contents for otherwise unsupported presentation frameworks.</p>
+                        <p>The JSON object should have the following format:</p>
+                        <pre><code>var customData = {"slides": [
+    {"index": "1", "title": "slide 1"},
+    {"index": "2", "title": "slide 2", "toc": true},
+    {"index": "3", "title": "slide 3", "nested": [
+        {"index": "3/0", "title": "slide 3/0"},
+        {"index": "3/1", "title": "slide 3/1"}
+     ]},
+    {"index": "4", "title": "slide 4"},
+    ...
+]};
+presentable.toc({
+    data: customData,
+    // Other config options
+});</code></pre>
+                        <p><em>"toc": true</em> identifies slide containing <em>#presentable-toc</em>.</p>
+                    </section>
+                    <section>
+                        <h3>Internationalization</h3>
+                        <p>Presentable can be used with any language!</p>
+                        <p>The following demonstrates the config options you might want to change based on your language.</p>
+
+                        <p><pre><code class="javascript">presentable.toc({
+    // Update with your language of choice
+    noTitle: "Untitled Slide"
+
+    // Use keyCode suitable for your language / keyboard
+    // http://www.asquare.net/javascript/tests/KeyCode.html
+    keyCode: 84    // 84 = t
+});</code></pre></p>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Using Presentable</h2>
+                    <section>
+                        <h3>Basic</h3>
+                        <ul>
+                            <li>By default, a "title" is any HTML element that meets the following requirements:
+                                <ul>
+                                    <li>It is an <em>&lt;h1&gt;</em>, <em>&lt;h2&gt;</em>, <em>&lt;h3&gt;</em> or any
+                                        tag marked with the <em>.presentable-title</em> class</li>
+                                </ul>
+                            </li>
+                            <li>The first eligible element in the DOM will be the table of contents title
+                            <pre><code>&lt;section&gt;
+    &lt;h1&gt;This will be the title in the table of contents&lt;/h1&gt;
+    &lt;h2&gt;This will not&lt;/h2&gt;
+&lt;/section&gt;</code></pre>
+                            </li>
+                            <li>Every slide should have a "title" or it will be assigned the title "Untitled Slide" in the table of contents.</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>Reveal.js &amp; Nested Slides</h3>
+                        <ul>
+                            <li>Nested section tags will be included as sub-titles in the generated table of contents</li>
+                            <li>An exception to the "Untitled Slide" rule from the Basic Usage slide is a parent section and it's first nested section tag
+                                which follow these special rules because they are navigationally the same slide:
+                                <pre><code>&lt;!--No title in parent section, 1st nested section has a title,
+it&#39;s title is displayed in the table content --&gt;
+&lt;section&gt;
+    &lt;section&gt;
+        &lt;h2&gt;table of contents title&lt;/h2&gt;
+    &lt;/section&gt;
+&lt;/section&gt;</code></pre>
+                                <pre><code>&lt;!-- Parent has title, 1st nested section does not, the parent title is
+displayed in the table of contents, the child is not --&gt;
+&lt;section&gt;
+    &lt;h2&gt;table of contents title&lt;/h2&gt;
+    &lt;section&gt;
+        &lt;p&gt;No title&lt;/p&gt;
+    &lt;/section&gt;
+&lt;/section&gt;</code></pre>
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section id="gettingCurrentSlideTitle">
+                    <h3>Bonus! Getting a Slide Title</h3>
+                    <p>Presentable exposes the <em>slideTitle()</em> function which returns the title of a slide identified
+                        by an index which matches the URL hash corresponding to that slide.</p>
+                    <ol>
+                        <li>Name: <strong>presentable.slideTitle</strong></li>
+                        <li>Parameters: <strong>Index of slide as a string</strong></li>
+                        <li>Return: <strong>Title of a slide</strong></li>
+                        <li>Example:
+                        <pre><code>presentable.slideTitle("9");  // returns "Bonus! Getting a Slide Title"
+presentable.slideTitle("0/1"); // returns "Table of Contents"</code></pre>
+                        </li>
+                    </ol>
+                    <p>One possible use is to track traffic to specific slides by passing the slide title
+                        to your web analytics provider each time it is visited.</p>
+                </section>
+
+				<section id="conclusion" class="bookend">
+					<h1>Presentable</h1>
+                    <h2>A Table of Contents for<br> HTML Presentations</h2>
+                    <ul>
+                        <li><a href="http://fcfeibel.com">Frederick C. Feibel</a></li>
+                        <li><a href="mailto:presentable@fcfeibel.com">presentable@fcfeibel.com</a></li>
+                        <li><a href="https://github.com/frederickf/presentable">github.com/frederickf/presentable</a></li>
+                    </ul>
+				</section>
+			</div>
+        </div>
+
+        <aside id="presentable-icon" class="revealjs">
+            <a title="Table of Contents" href="#/0/1">
+                <img alt="Table of Contents" src="presentable/icons/revealjs.png"/>
+            </a>
+        </aside>
+
+		<script src="supported-frameworks/reveal.js/lib/js/head.min.js"></script>
+		<script src="supported-frameworks/reveal.js/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: false,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'supported-frameworks/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'supported-frameworks/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'supported-frameworks/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'supported-frameworks/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'supported-frameworks/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'supported-frameworks/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'presentable/presentable.min.js', async: true, callback: function() { presentable.toc({framework: "revealjs"}); } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
