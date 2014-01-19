@@ -14,7 +14,28 @@ module.exports = function(grunt) {
             }
         },
         copy: {
-            icons: {expand: true, cwd: 'src/', src: ['icons/**'], dest: 'dist/'}
+            icons: {expand: true, cwd: 'src/', src: ['icons/**'], dest: 'dist/'},
+            documentation: {
+                options: {
+                    noProcess: ['**/*.{png,gif,jpg,jpegico,psd}'],
+                    process: function (content, srcPath) {
+                        //return content.replace(/..\/..\/dist\//g, "../../presentable/");
+                        return content.replace(/..\/..\/dist\//g, "../../presentable/");
+                    }
+                },
+                files: [
+                    {expand: true, cwd: 'dist/', src: ['**'], dest: 'documentation/presentable/'},
+                    {expand: true, cwd: 'presentations/html5slides/', src: ['index-r21.html'], dest: 'documentation/supported-frameworks/html5slides/', rename: function(dest, src) {
+                        return dest + 'index.html';
+                    }},
+                    {expand: true, cwd: 'presentations/impress.js-0.5.3/', src: ['**'], dest: 'documentation/supported-frameworks/impress.js/'},
+                    {expand: true, cwd: 'presentations/', src: ['io-2012-slides/**'], dest: 'documentation/supported-frameworks/'},
+                    {expand: true, cwd: 'presentations/shower-20131018-template/', src: ['**'], dest: 'documentation/supported-frameworks/shower/'},
+                    {expand: true, cwd: 'presentations/reveal.js-2.5.0/', src: ['**'], dest: 'documentation/supported-frameworks/reveal.js/'}
+                ]
+
+            }
+
         },
         cssmin: {
             minify: {
