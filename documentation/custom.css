@@ -35,6 +35,10 @@ li li {margin-bottom: .1em;}
 #installation-Impressjs li {list-style-type: none; margin-left: 45px; text-indent: -45px;}
 #installation-Impressjs ol li:before { counter-increment: impressjsCount; content:counter(impressjsCount, decimal)". ";}
 
+#Installation-id2012slides {}
+#Installation-id2012slides li {list-style-type: none; margin-left: 45px; text-indent: -45px;}
+#Installation-id2012slides ol li:before { counter-increment: impressjsCount; content:counter(impressjsCount, decimal)". ";}
+
 #conclusion ul {display: block;}
 #conclusion li {margin-bottom: 0; text-align: center; list-style: none;}
 
