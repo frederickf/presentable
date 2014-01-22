@@ -31,7 +31,7 @@ module.exports = function(grunt) {
                     {expand: true, cwd: 'presentations/impress.js-0.5.3/', src: ['**'], dest: 'documentation/supported-frameworks/impress.js/'},
                     {expand: true, cwd: 'presentations/', src: ['io-2012-slides/**'], dest: 'documentation/supported-frameworks/'},
                     {expand: true, cwd: 'presentations/shower-20131018-template/', src: ['**'], dest: 'documentation/supported-frameworks/shower/'},
-                    {expand: true, cwd: 'presentations/reveal.js-2.5.0/', src: ['**'], dest: 'documentation/supported-frameworks/reveal.js/'}
+                    {expand: true, cwd: 'presentations/reveal.js-2.6.1/', src: ['**'], dest: 'documentation/supported-frameworks/reveal.js/'}
                 ]
 
             }
