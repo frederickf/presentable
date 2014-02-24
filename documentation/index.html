@@ -156,20 +156,9 @@ from the TOC and the main heading will be used instead.--&gt;
                         </ol>
                     </section>
                     <section>
-                        <h3>JavaScript</h3>
-                            <ol class="faux">
-                            <li>4a. <strong>Versions <= 1.3:</strong> place the following towards the bottom of the presentation source code
-                                file with the other &lt;script&gt; tags:
-                                <pre><code>&lt;script src=&quot;path/to/presentable.js&quot;&gt;&lt;/script&gt;</code></pre>
-                            </li>
-
-                            <li>4b. <strong>Version 1.4:</strong> use <em>head.js()</em> to load <em>presentable.js</em> by adding <em>'path/to/presentable.js'</em> as
-                                demonstrated below:
-                                <pre><code>head.js( !document.body.classList ? 'lib/js/classList.js' : null )
-.js( 'js/reveal.js', 'path/to/presentable.js', function() {</code></pre>
-                            </li>
-
-                            <li>4c. <strong>Version => 1.5:</strong> use Reveal.initialize() to extend the presentation framework.
+                        <h3>JS &amp; Initialization</h3>
+                        <ol class="faux">
+                            <li>4. Use Reveal.initialize() to extend the presentation framework.
                                 <pre><code>Reveal.initialize({
     // Other configs...
     dependencies: [
@@ -180,32 +169,19 @@ from the TOC and the main heading will be used instead.--&gt;
     ]
 });</code></pre>
                             </li>
-                        </ol>
-                    </section>
-                    <section>
-                        <h3>Initialize</h3>
-                        <ol class="faux">
-                            <li>5a. <strong>Version <= 1.4:</strong> Place <em>presentable.toc()</em> before <em>Reveal.initialize()</em>
-                                <pre><code class="javascript">presentable.toc({
-    framework: "revealjs"
-});
-
-Reveal.initialize({...</code></pre>
-                                <p>The table of contents HTML must be in the DOM before Reveal is initialized.</p>
-                            </li>
-                            <li>5b. <strong>Version => 1.5:</strong> Initialization is done with a callback function
+                            <li>5. Initialization is done with a callback function.
                             <pre><code>Reveal.initialize({
     // Other configs...
     dependencies: [
         // Not all dependencies shown...
-        { src: 'path/to/presentable.js', callback: function() { window.presentable.toc({framework: "revealjs"}); } }
+        { src: 'path/to/presentable.js', callback: function() { presentable.toc({framework: "revealjs"}); } }
     ]
 });</code></pre>
                             </li>
                         </ol>
-
                         <p>See the <a href="#/10">Configuration</a> slide for more details on the object being passed
                             to <em>presentable.toc()</em>.</p>
+                        <p>See Presentable <a href="https://github.com/frederickf/presentable/wiki">wiki</a> for instructions covering older versions of Reveal.js.</p>
                     </section>
                 </section>
 
