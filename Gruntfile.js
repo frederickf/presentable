@@ -2,6 +2,7 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        ssh: grunt.file.readJSON('ssh.json'),
         concat: {
             options: {
                 banner: '<%= grunt.file.read("LICENSE") %>'
@@ -85,6 +86,20 @@ module.exports = function(grunt) {
                     }
                 }
             }
+        },
+        rsync: {
+            options: {
+                args: ['-r', '-a', '-vv'],
+                syncDest: true,
+                ssh: true
+            },
+            publishDocumentation: {
+                options: {
+                    src: "./documentation/",
+                    dest: '<%= ssh.dest %>',
+                    port: '<%= ssh.port %>'
+                }
+            }
         }
     });
 
@@ -93,6 +108,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks("grunt-rsync");
 
     grunt.registerTask("build", [
         'copy:icons',
