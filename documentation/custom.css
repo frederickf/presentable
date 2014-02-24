@@ -1,0 +1,53 @@
+/* Layout
+=====================*================================================================================================*/
+body { counter-reset:showerCount impressjsCount id2012slidesCount;}
+/*.reveal .slides .future {visibility: hidden;}*/
+.reveal section {text-align: left; font-size: 32px;}
+
+/* Generic
+======================================================================================================================*/
+h1, h2, h3, h4, h5, h6 {text-align: center;}
+.reveal {font-family: "Lato", serif}
+/*.reveal h1 {margin-top: 50px; font-size: 150px;}*/
+/*.reveal h2 {font-size: 1.8em;}*/
+/*.reveal h3 {text-transform: none;}*/
+.reveal p {margin-bottom: 1em;}
+.reveal pre {width: auto; text-indent: 0;}
+.reveal ul, .reveal ol {display: block;}
+.reveal ol li,.reveal ul li {margin-bottom: 1em;}
+.reveal li li {margin-bottom: .1em;}
+
+/* Slide specific
+======================================================================================================================*/
+/* first/last slide */
+.bookend h2 {margin-top: 50px}
+.bookend p, .bookend ul {text-align: center; margin-top: 50px;}
+
+#gettingCurrentSlideTitle ol {margin-left: 1.5em; margin-bottom: 1em;}
+#gettingCurrentSlideTitle li {margin-bottom: .1em;}
+
+#loadTheResources div {text-indent: -45px; margin-left: 45px;}
+
+#Installation-Shower {}
+#Installation-Shower li {list-style-type: none; margin-left: 45px; text-indent: -45px;}
+#Installation-Shower ol li:before { counter-increment: showerCount; content:counter(showerCount, decimal)". ";}
+
+#installation-Impressjs {}
+#installation-Impressjs li {list-style-type: none; margin-left: 45px; text-indent: -45px;}
+#installation-Impressjs ol li:before { counter-increment: impressjsCount; content:counter(impressjsCount, decimal)". ";}
+
+#Installation-id2012slides {}
+#Installation-id2012slides li {list-style-type: none; margin-left: 45px; text-indent: -45px;}
+#Installation-id2012slides ol li:before { counter-increment: id2012slidesCount; content:counter(id2012slidesCount, decimal)". ";}
+
+#conclusion ul {display: block;}
+#conclusion li {margin-bottom: 0; text-align: center; list-style: none;}
+
+/* utility
+======================================================================================================================*/
+.reveal .example {text-align: center; margin: -15px 0 15px; font-size: 24px;}
+/*.reveal .example {text-align: center;}*/
+/* Hides pre-calculated #'s and simulates outside list-style. Add your own numbers */
+ol.faux {margin-left: 0;}
+ol.faux li {text-indent: -50px; margin-left: 55px; list-style: none;}
+ol.faux li * {text-indent: 0;}

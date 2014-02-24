@@ -1,0 +1,5 @@
+# These resources are built from other resources already under version control
+/documentation/supported-frameworks/
+/documentation/presentable/
+# Contains secret credentials. Never commit.
+/ssh.json
