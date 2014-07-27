@@ -1,0 +1,5 @@
+1. controller.js
+rearrange contents of init js so relevant methods are near each other
+
+2. options.js
+extract out options into new module

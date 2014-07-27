@@ -4,6 +4,7 @@ requirejs.config({
         controller: 'controller',
         html: 'html',
         json: 'json',
+        options: 'options',
         util: 'util'
     }
 });

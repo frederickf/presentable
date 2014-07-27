@@ -1,19 +1,7 @@
-define('controller', ['html', 'json','util'], function(html, json, util) {
+define('controller', ['html', 'json', 'util', 'options'], function(html, json, util, options) {
+    options.getOption('keyCode');
     var log = console.log || function() {},
         main = {
-            options: {
-                data: {"slides": []},
-                framework: "",
-                iconContainer: "#presentable-icon",
-                keyCode: 84,
-                noTitle: "Untitled Slide",
-                hideNoTitle: false,
-                reload: false,
-                titles: "h1,h2,h3,.presentable-title",
-                tocContainer: "#presentable-toc",
-                urlHash: "#"
-            },
-
             /**
              * public: user
              *
@@ -23,56 +11,36 @@ define('controller', ['html', 'json','util'], function(html, json, util) {
                 var tocSlideData, toc, tocContainer, iconContainer;
 
                 try {
-                    main.configure(userOptions);
+                    options.init(userOptions, json.frameworks);
 
                     // Use json to create slide data if user didn't provide any
-                    if (main.options.data.slides.length === 0) {
-                        util.extend(json, json.frameworks[main.options.framework]);
-                        json.init(main.options);
-                        main.options.data.slides = json.create();
+                    if (options.getOption('data').slides.length === 0) {
+                        util.extend(json, json.frameworks[options.getOption('framework')]);
+                        json.init(options.getAll());
+                        options.getOption('data').slides = json.create();
                     }
 
-                    tocSlideData = main.tocSlideDataRecursive(main.options.data.slides);
-                    tocContainer = document.querySelector(main.options.tocContainer);
-                    iconContainer = document.querySelector(main.options.iconContainer);
+                    // Table of contents
+                    html.init(options.getAll());
+                    toc = html.createRecursive(document.createDocumentFragment(), options.getOption('data').slides);
+                    tocContainer = document.querySelector( options.getOption('tocContainer') );
+                    main.enableOnClickNavigation(tocContainer);
+                    tocContainer.appendChild(toc);
 
-                    html.init(main.options);
-                    toc = html.createRecursive(document.createDocumentFragment(), main.options.data.slides);
-
-                    if (main.options.keyCode !== false) {
+                    // Keyboard navigation
+                    if (options.getOption('keyCode') !== false) {
+                        tocSlideData = main.tocSlideDataRecursive(options.getOption('data').slides);
                         main.enableKeyboardNavigation(tocSlideData);
                     }
 
+                    // Icon
+                    iconContainer = document.querySelector( options.getOption('iconContainer') );
                     if (iconContainer) {
                         main.enableOnClickNavigation(iconContainer);
                     }
-
-                    main.enableOnClickNavigation(tocContainer);
-
-                    tocContainer.appendChild(toc);
                 }
                 catch(e) {
                     log("Presentable: " + e.message);
-                }
-            },
-
-            /**
-             * private
-             *
-             * @param userOptions
-             */
-            configure: function(userOptions) {
-                if (userOptions.framework) {
-                    // Configure with framework configs
-                    util.extend(main.options, json.frameworks[userOptions.framework].options);
-                    // but allow user to override them
-                    util.extend(main.options, userOptions);
-                }
-                else if (userOptions.data) {
-                    util.extend(main.options, userOptions);
-                }
-                else {
-                    throw {message: "You must provide a value for framework or data."};
                 }
             },
 
@@ -119,8 +87,8 @@ define('controller', ['html', 'json','util'], function(html, json, util) {
                     event.preventDefault();
 
                     keyPressed = event.keyCode || event.which;
-                    if (keyPressed === main.options.keyCode) {
-                        main.goToSlide(main.options.urlHash + tocSlideData.index);
+                    if ( keyPressed === options.getOption('keyCode') ) {
+                        main.goToSlide( options.getOption('urlHash') + tocSlideData.index );
                     }
                 }, false);
             },
@@ -155,7 +123,7 @@ define('controller', ['html', 'json','util'], function(html, json, util) {
              */
             slideTitlesRecursive: function(index, tocArray, title) {
                 title = title || '';
-                tocArray = tocArray || main.options.data.slides;
+                tocArray = tocArray || options.getOption('data').slides;
 
                 for (var i = 0; i < tocArray.length; i++) {
                     if (tocArray[i].index === index) {
@@ -177,7 +145,7 @@ define('controller', ['html', 'json','util'], function(html, json, util) {
             goToSlide: function(URL) {
                 window.location =  URL;
                 // Some frameworks don't listen to changes in window.location necessitating forced reload
-                if (main.options.reload) {
+                if ( options.getOption('reload') ) {
                     window.location.reload();
                 }
             }
