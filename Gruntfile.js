@@ -77,7 +77,7 @@ module.exports = function(grunt) {
                         start: '(function(window, document) {',
                         end: '}(window, document) );'
                     },
-                    //optimize: 'none',
+                    optimize: 'none',
                     mainConfigFile: 'src/requireConfig.js',
                     out: 'dist/presentable.min.js',
                     skipModuleInsertion: true,

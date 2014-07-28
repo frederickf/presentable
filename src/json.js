@@ -69,9 +69,6 @@ define('json', ['util'], function(util) {
 
     json.frameworks.revealjs = {
         SLIDE_SEARCH_STRING: '.slides > section',
-        options: {
-            urlHash: "#/"
-        },
         create: function() {
             var sections, sectionCount, tocArray, i;
             sections = document.querySelectorAll(this.SLIDE_SEARCH_STRING);
@@ -199,9 +196,6 @@ define('json', ['util'], function(util) {
 
     json.frameworks.html5slides = {
         SLIDE_SEARCH_STRING: 'article',
-        options: {
-            reload: true
-        },
         slideIndex: function(slide, i) {
             return i + 1;
         }
@@ -209,9 +203,6 @@ define('json', ['util'], function(util) {
 
     json.frameworks.io2012slides = {
         SLIDE_SEARCH_STRING: 'slide:not([hidden=""])',
-        options: {
-            reload: true
-        },
         slideIndex: function(slide, i) {
             return i + 1;
         }

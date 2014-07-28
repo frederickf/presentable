@@ -12,15 +12,27 @@ define('options', ['util'], function(util) {
             urlHash: "#"
         },
 
+        frameworkOptions = {
+            revealjs: {
+                urlHash: "#/"
+            },
+            html5slides: {
+                reload: true
+            },
+            io2012slides: {
+                reload: true
+            }
+        },
+
         /**
          *
          * @param userOptions
          * @param frameworkOptions
          */
-        init = function(userOptions, frameworkOptions) {
+        init = function(userOptions) {
             if (userOptions.framework) {
                 // Configure with framework configs
-                util.extend(defaultOptions, frameworkOptions[userOptions.framework].options);
+                util.extend(defaultOptions, frameworkOptions[userOptions.framework]);
                 // but allow user to override them
                 util.extend(defaultOptions, userOptions);
             }

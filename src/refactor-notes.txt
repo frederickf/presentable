@@ -3,3 +3,14 @@ rearrange contents of init js so relevant methods are near each other
 
 2. options.js
 extract out options into new module
+
+3. TOC
+Move toc related code from controller.js in to toc.js
+Refactor enableOnclick navigation into findHref and move into util.js
+Move goToSlide into util.js
+
+4. icon
+Move icon related code into icon.js
+
+5. key board nav
+Move key board nav code into keyBoardNav.js

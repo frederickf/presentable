@@ -5,6 +5,9 @@ requirejs.config({
         html: 'html',
         json: 'json',
         options: 'options',
-        util: 'util'
+        util: 'util',
+        toc: 'toc',
+        icon: 'icon',
+        keyBoardNav: 'keyBoardNav'
     }
 });

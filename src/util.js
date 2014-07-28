@@ -24,6 +24,44 @@ define('util', [], function() {
                     a[i] = b[i];
                 }
             }
+        },
+
+        /**
+         * private
+         *
+         * Takes into account that some frameworks don't listen to window.location updates
+         * requiring a forced reload to navigate to the desired slide
+         *
+         * @param container
+         */
+        findHref: function(container, event) {
+            var target;
+
+            event.stopPropagation();
+            event.preventDefault();
+
+            target = event.target;
+            while (container !== target) {
+                // For some reason IE10 confuses img.src with a.href
+                if (target.href && target.tagName === "A") {
+                    return target.href;
+                }
+                target = target.parentNode;
+            }
+        },
+
+        /**
+         * private
+         *
+         * @param URL
+         */
+        goToSlide: function(URL, reload) {
+            if(!URL) {return;}
+            window.location =  URL;
+            // Some frameworks don't listen to changes in window.location necessitating forced reload
+            if ( reload ) {
+                window.location.reload();
+            }
         }
     };
 
