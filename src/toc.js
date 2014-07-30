@@ -9,6 +9,9 @@ define('toc', ['util', 'html'], function(util, html) {
             this.tocContainer = document.querySelector( options.getOption('tocContainer') );
             this.reload = options.getOption('reload');
             this.slideData = options.getOption('data').slides;
+
+            this.create();
+            this.inject();
         },
 
         create: function() {

@@ -2,7 +2,7 @@ requirejs.config({
     baseUrl: 'src',
     paths: {
         html: 'html',
-        json: 'json',
+        jsonBuilderFactory: 'jsonBuilderFactory',
         options: 'options',
         util: 'util',
         toc: 'toc',

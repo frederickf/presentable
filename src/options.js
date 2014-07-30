@@ -50,12 +50,17 @@ define('options', ['util'], function(util) {
 
         getAll = function() {
             return defaultOptions;
+        },
+
+        slideDataExists = function() {
+            return (this.getOption('data').slides.length === 0);
         };
 
     return {
         init: init,
         getOption: getOption,
-        getAll: getAll
+        getAll: getAll,
+        slideDataExists: slideDataExists
     };
 
 });

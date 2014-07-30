@@ -14,3 +14,10 @@ Move icon related code into icon.js
 
 5. key board nav
 Move key board nav code into keyBoardNav.js
+
+6. controller.js
+Migrated controller.js to main.js
+
+7. json.js
+renamed jsonBuilderFactory, added method to return complete jsonbuilder object instead of client code creating it
+

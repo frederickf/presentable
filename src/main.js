@@ -1,4 +1,4 @@
-require(['options', 'util', 'json', 'toc', 'icon', 'keyBoardNav'], function(options, util, json, toc, icon, keyBoardNav) {
+require(['options', 'jsonBuilderFactory', 'toc', 'icon', 'keyBoardNav'], function(options, jsonBuilderFactory, toc, icon, keyBoardNav) {
 
     var log = console.log || function() {},
         main = {
@@ -8,26 +8,20 @@ require(['options', 'util', 'json', 'toc', 'icon', 'keyBoardNav'], function(opti
              * @param userOptions
              */
             init: function(userOptions) {
+                var jsonBuilder;
 
                 try {
                     options.init(userOptions);
 
-                    // Use json to create slide data if user didn't provide any
-                    if (options.getOption('data').slides.length === 0) {
-                        util.extend(json, json.frameworks[options.getOption('framework')]);
-                        json.init(options.getAll());
-                        options.getOption('data').slides = json.create();
+                    if (!options.slideDataExists()) {
+                        jsonBuilder = jsonBuilderFactory(options);
+                        options.getOption('data').slides = jsonBuilder.create();
                     }
 
-                    // Table of contents
                     toc.init(options);
-                    toc.create();
-                    toc.inject();
 
-                    // Keyboard navigation
                     keyBoardNav.init(options);
 
-                    // Icon
                     icon.init(options);
                 }
                 catch(e) {
@@ -43,7 +37,7 @@ require(['options', 'util', 'json', 'toc', 'icon', 'keyBoardNav'], function(opti
              * @param title
              * @returns {string}
              */
-            slideTitlesRecursive: function(index, tocArray, title) {
+            slideTitleRecursive: function(index, tocArray, title) {
                 title = title || '';
                 tocArray = tocArray || options.getOption('data').slides;
 
@@ -66,14 +60,14 @@ require(['options', 'util', 'json', 'toc', 'icon', 'keyBoardNav'], function(opti
         window.define(function() {
             return {
                 toc: main.init,
-                slideTitle: main.slideTitlesRecursive
+                slideTitle: main.slideTitleRecursive
             };
         });
     }
     else {
         window.presentable = {
             toc: main.init,
-            slideTitle: main.slideTitlesRecursive
+            slideTitle: main.slideTitleRecursive
         };
     }
 });

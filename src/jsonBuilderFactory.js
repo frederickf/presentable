@@ -1,23 +1,28 @@
-define('json', ['util'], function(util) {
-    var json = {};
-    json = {
+define('jsonBuilderFactory', ['util'], function(util) {
+    var frameworks, factory, jsonBuilder;
+
+    factory = function (options) {
+        util.extend( jsonBuilder, frameworks[options.getOption('framework')] );
+        jsonBuilder.init(options);
+        return jsonBuilder;
+    };
+
+    jsonBuilder = {
         TITLE_SEARCH_STRING: '',
         UNTITLED_SLIDE_TEXT: '',
         TOC_CONTAINER: '',
 
         /**
-         * public: controller.js
          *
          * @param options
          */
         init: function(options) {
-            this.TITLE_SEARCH_STRING = options.titles;
-            this.UNTITLED_SLIDE_TEXT = options.noTitle;
-            this.TOC_CONTAINER = options.tocContainer;
+            this.TITLE_SEARCH_STRING = options.getOption('titles');
+            this.UNTITLED_SLIDE_TEXT = options.getOption('noTitle');
+            this.TOC_CONTAINER = options.getOption('tocContainer');
         },
 
         /**
-         * private
          *
          * @param slide
          * @returns {string}
@@ -33,7 +38,6 @@ define('json', ['util'], function(util) {
         },
 
         /**
-         * private
          *
          * @param slide
          * @returns {Node}
@@ -43,7 +47,16 @@ define('json', ['util'], function(util) {
         },
 
         /**
-         * public: controller.js, json.js
+         * Creates data structure describing slide titles in following format
+         * [
+         *   {"index": "1", "title": "slide 1", "toc": true}, NOTE: "toc":true = slide with toc
+         *   {"index": "2", "title": "slide 2", "nested": [
+         *        {"index": "2/0", "title": "slide 2/0"},
+         *        {"index": "2/1", "title": "slide 2/1"}
+         *    ]},
+         * ]
+         *
+         * @returns {Array}
          */
         create: function() {
             var slides, slideCount, slideData, tocArray, i;
@@ -65,9 +78,9 @@ define('json', ['util'], function(util) {
         }
     };
 
-    json.frameworks = {};
+    frameworks = {};
 
-    json.frameworks.revealjs = {
+    frameworks.revealjs = {
         SLIDE_SEARCH_STRING: '.slides > section',
         create: function() {
             var sections, sectionCount, tocArray, i;
@@ -194,28 +207,28 @@ define('json', ['util'], function(util) {
         }
     };
 
-    json.frameworks.html5slides = {
+    frameworks.html5slides = {
         SLIDE_SEARCH_STRING: 'article',
         slideIndex: function(slide, i) {
             return i + 1;
         }
     };
 
-    json.frameworks.io2012slides = {
+    frameworks.io2012slides = {
         SLIDE_SEARCH_STRING: 'slide:not([hidden=""])',
         slideIndex: function(slide, i) {
             return i + 1;
         }
     };
 
-    json.frameworks.shower = {
+    frameworks.shower = {
         SLIDE_SEARCH_STRING: '.slide',
         slideIndex: function(slide) {
             return slide.id;
         }
     };
 
-    json.frameworks.impressjs = {
+    frameworks.impressjs = {
         SLIDE_SEARCH_STRING: '.step',
         slideIndex: function(slide, i) {
             if (slide.id) {
@@ -225,5 +238,5 @@ define('json', ['util'], function(util) {
         }
     };
 
-    return json;
+    return factory;
 });
