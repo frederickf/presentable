@@ -10,12 +10,15 @@ module.exports = function(grunt) {
             license: {
                 files: {
                     'dist/presentable.min.css': 'dist/presentable.min.css',
-                    'dist/presentable.min.js': 'dist/presentable.min.js'
+                    'dist/presentable.min.js': 'dist/presentable.min.js',
+                    'dist/presentable.css': 'dist/presentable.css',
+                    'dist/presentable.js': 'dist/presentable.js'
                 }
             }
         },
         copy: {
             icons: {expand: true, cwd: 'src/', src: ['icons/**'], dest: 'dist/'},
+            css: {expand: true, cwd: 'src/', src: ['presentable.css'], dest: 'dist/'},
             documentation: {
                 options: {
                     noProcess: ['**/*.{png,gif,jpg,jpegico,psd}'],
@@ -69,21 +72,29 @@ module.exports = function(grunt) {
             src: 'src/*.js'
         },
         requirejs: {
-            js: {
+            options: {
+                name: 'main',
+                baseUrl: 'src',
+                wrap: {
+                    start: '(function(window, document) {',
+                    end: '}(window, document) );'
+                },
+                mainConfigFile: 'src/requireConfig.js',
+                skipModuleInsertion: true,
+                onBuildWrite: function( name, path, contents ) {
+                    return require('amdclean').clean(contents);
+                }
+            },
+            jsmin: {
                 options: {
-                    name: 'main',
-                    baseUrl: 'src',
-                    wrap: {
-                        start: '(function(window, document) {',
-                        end: '}(window, document) );'
-                    },
+                    optimize: 'uglify',
+                    out: 'dist/presentable.min.js'
+                }
+            },
+            jsmax: {
+                options: {
                     optimize: 'none',
-                    mainConfigFile: 'src/requireConfig.js',
-                    out: 'dist/presentable.min.js',
-                    skipModuleInsertion: true,
-                    onBuildWrite: function( name, path, contents ) {
-                        return require('amdclean').clean(contents);
-                    }
+                    out: 'dist/presentable.js'
                 }
             }
         },
@@ -112,9 +123,11 @@ module.exports = function(grunt) {
 
     grunt.registerTask("build", [
         'copy:icons',
+        'copy:css',
         'cssmin:minify',
         'jshint:src',
-        'requirejs:js',
+        'requirejs:jsmin',
+        'requirejs:jsmax',
         'concat:license'
     ]);
 
