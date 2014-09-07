@@ -95,7 +95,7 @@ var options = function (util) {
             }, getAll = function () {
                 return defaultOptions;
             }, slideDataExists = function () {
-                return this.getOption('data').slides.length === 0;
+                return this.getOption('data').slides.length > 0;
             };
         return {
             init: init,
@@ -323,11 +323,13 @@ var keyBoardNav = function (util) {
         return {
             tocSlideHref: '',
             keyCode: '',
+            reload: false,
             init: function (options) {
                 if (options.getOption('keyCode') !== false) {
                     var tocSlideData = this.tocSlideDataRecursive(options.getOption('data').slides);
                     this.tocSlideHref = options.getOption('urlHash') + tocSlideData.index;
                     this.keyCode = options.getOption('keyCode');
+                    this.reload = options.getOption('reload');
                     this.enableKeyboardNavigation();
                 }
             },
@@ -352,7 +354,7 @@ var keyBoardNav = function (util) {
                     event.preventDefault();
                     keyPressed = event.keyCode || event.which;
                     if (keyPressed === self.keyCode) {
-                        util.goToSlide(self.tocSlideHref);
+                        util.goToSlide(self.tocSlideHref, self.reload);
                     }
                 }, false);
             }
@@ -374,6 +376,7 @@ var keyBoardNav = function (util) {
                     icon.init(options);
                 } catch (e) {
                     log('Presentable: ' + e.message);
+                    log(options.getOption('data').slides);
                 }
             },
             slideTitleRecursive: function (index, tocArray, title) {

@@ -53,7 +53,7 @@ define('options', ['util'], function(util) {
         },
 
         slideDataExists = function() {
-            return (this.getOption('data').slides.length === 0);
+            return (this.getOption('data').slides.length > 0);
         };
 
     return {
