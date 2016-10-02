@@ -2,7 +2,6 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        ssh: grunt.file.readJSON('ssh.json'),
         concat: {
             options: {
                 banner: '<%= grunt.file.read("LICENSE") %>'
@@ -84,20 +83,6 @@ module.exports = function(grunt) {
                     onBuildWrite: function( name, path, contents ) {
                         return require('amdclean').clean(contents);
                     }
-                }
-            }
-        },
-        rsync: {
-            options: {
-                args: ['-r', '-a', '-vv'],
-                syncDest: true,
-                ssh: true
-            },
-            publishDocumentation: {
-                options: {
-                    src: "./documentation/",
-                    dest: '<%= ssh.dest %>',
-                    port: '<%= ssh.port %>'
                 }
             }
         }
