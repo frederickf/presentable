@@ -1,5 +1,5 @@
 define('controller', ['html', 'json','util'], function(html, json, util) {
-    var log = console.log || function() {},
+    var log = this.console ? console.log.bind(console) : function() {},
         main = {
             options: {
                 data: {"slides": []},
