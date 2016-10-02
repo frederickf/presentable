@@ -170,7 +170,16 @@ define('json', ['util'], function(util) {
                 firstChildSlide = parentSlide.nested[0];
                 // testing that 1st child not untitled necessary because removeUntitledFirstChild() will handle that case
                 if ( (parentSlide.title === firstChildSlide.title) && (firstChildSlide.title !== this.UNTITLED_SLIDE_TEXT) ) {
-                    parentSlide.nested.shift();
+                    if (parentSlide.nested.length < 2) {
+                        // A <section> with only one <section> child should not be necessary,
+                        // but could easily happen while moving sections around.
+                        // this handles that scenario
+                        delete parentSlide.nested;
+                    }
+                    else {
+                        parentSlide.nested.shift();
+                    }
+
                 }
 
             }
