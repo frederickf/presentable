@@ -1,0 +1,184 @@
+/* default & Reveal.js < 1.4 (due to the usage of an ID on the body)
+======================================================================================================================*/
+#presentable-toc {
+    height: 600px;
+    overflow: auto;
+}
+
+#reveal #presentable-toc ol,
+#presentable-toc ol {
+    display: block;
+    margin: 0.6em 0 1.2em 0;
+    padding: 0;
+}
+
+#reveal #presentable-toc ol, #reveal #presentable-toc ul,
+#presentable-toc ol, #presentable-toc ul {
+    list-style: none;
+}
+
+#reveal #presentable-toc ol ul, #reveal #presentable-toc ol ol,
+#presentable-toc ol ul, #presentable-toc ol ol{
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+    margin-left: 1.5em;
+}
+
+#reveal #presentable-toc li,
+#presentable-toc li {
+    margin: 0 0 0.2em;
+    padding: 0;
+}
+
+#presentable-toc li:before {
+    content: normal;
+}
+
+#presentable-toc li div {
+    border-bottom: 1px dotted #fff;
+    width: 98%;
+}
+
+#presentable-toc li .index {
+    float: right;
+    text-align: right;
+}
+
+#reveal #presentable-toc li a,
+#presentable-toc li a {
+    text-decoration: none;
+}
+
+#presentable-icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+#presentable-icon a {
+    outline: none;
+}
+
+#presentable-icon img {
+    border: 1px solid #666;
+    outline: none;
+}
+
+/* Reveal.js all
+======================================================================================================================*/
+#reveal .slides .future,
+.reveal .slides .future {
+    /* Without this anchor tags are click-able in future slides even though they cannot actually be seen */
+    visibility: hidden;
+}
+
+#reveal #presentable-icon,
+.reveal #presentable-icon {
+    z-index: 30;
+}
+
+#reveal #presentable-icon a:hover img,
+.reveal #presentable-icon a:hover img {
+    border-color: #13daec;
+}
+
+
+/* html5slides
+======================================================================================================================*/
+#presentable-toc.html5slides {
+    height: 540px;
+}
+
+#presentable-toc.html5slides li div {
+    border-bottom: 1px dotted #000
+}
+
+/* io2012slides
+======================================================================================================================*/
+#presentable-toc.io2012slides {
+    height: 500px;
+}
+
+#presentable-toc.io2012slides li div {
+    border-bottom: 1px dotted #000
+}
+
+#presentable-toc.io2012slides li a {
+    border-bottom: none;
+}
+
+/* shower
+======================================================================================================================*/
+#presentable-toc.shower {
+    height: 340px;
+    font-size: 80%;
+}
+
+#presentable-toc.shower ol {
+    counter-reset: tocIndex;
+}
+
+#presentable-toc.shower ol li, #presentable-toc.shower ul li {
+    text-indent: 0;
+}
+
+#presentable-toc.shower li div {
+    border-color: #000;
+}
+
+#presentable-toc.shower a {
+    border: none;
+}
+
+#presentable-toc.shower li .title:after {
+    counter-increment: tocIndex;
+    content:counter(tocIndex, decimal-leading-zero);
+    float: right;
+    color: #bbb;
+}
+
+#presentable-toc.shower .index {
+    display: none;
+}
+
+.cover #presentable-icon.shower,
+.list #presentable-icon.shower {
+    display: none;
+}
+
+#presentable-icon.shower img {
+    border-color: #bbb;
+}
+
+/* impress.js
+======================================================================================================================*/
+#presentable-icon.impressjs {
+    pointer-events: auto;
+}
+
+#presentable-icon.impressjs a {
+    background: none;
+}
+
+#presentable-toc.impressjs ol {
+    counter-reset: tocIndex;
+}
+
+#presentable-toc.impressjs div {
+    line-height: 1;
+}
+
+#presentable-toc.impressjs li .title:after {
+    counter-increment: tocIndex;
+    content:counter(tocIndex, decimal-leading-zero);
+    float: right;
+    color: #bbb;
+}
+
+#presentable-toc.impressjs li .title {
+    font-size: 35px;
+}
+
+#presentable-toc.impressjs .index {
+    display: none;
+}

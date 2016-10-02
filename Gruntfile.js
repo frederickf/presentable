@@ -33,8 +33,8 @@ module.exports = function(grunt) {
                     {expand: true, cwd: 'presentations/shower-20131018-template/', src: ['**'], dest: 'documentation/supported-frameworks/shower/'},
                     {expand: true, cwd: 'presentations/reveal.js-2.6.1/', src: ['**'], dest: 'documentation/supported-frameworks/reveal.js/'}
                 ]
-
-            }
+            },
+            css: {expand: true, cwd: 'src/', src: 'presentable.css', dest: 'dist/'}
 
         },
         cssmin: {
@@ -76,16 +76,23 @@ module.exports = function(grunt) {
                         start: '(function(window, document) {',
                         end: '}(window, document) );'
                     },
-                    //optimize: 'none',
+                    optimize: 'none',
                     mainConfigFile: 'src/requireConfig.js',
-                    out: 'dist/presentable.min.js',
+                    out: 'dist/presentable.js',
                     skipModuleInsertion: true,
                     onBuildWrite: function( name, path, contents ) {
                         return require('amdclean').clean(contents);
                     }
                 }
             }
-        }
+        },
+        uglify: {
+            js: {
+                files: {
+                    'dist/presentable.min.js': 'dist/presentable.js'
+                }
+            }
+          }
     });
 
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -93,13 +100,15 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
-    grunt.loadNpmTasks("grunt-rsync");
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
     grunt.registerTask("build", [
         'copy:icons',
+        'copy:css',
         'cssmin:minify',
         'jshint:src',
         'requirejs:js',
+        'uglify:js',
         'concat:license'
     ]);
 
