@@ -4,6 +4,7 @@ define('json', ['util'], function(util) {
         TITLE_SEARCH_STRING: '',
         UNTITLED_SLIDE_TEXT: '',
         TOC_CONTAINER: '',
+        PAGE_DIVIDER: '',
 
         /**
          * public: controller.js
@@ -14,6 +15,11 @@ define('json', ['util'], function(util) {
             this.TITLE_SEARCH_STRING = options.titles;
             this.UNTITLED_SLIDE_TEXT = options.noTitle;
             this.TOC_CONTAINER = options.tocContainer;
+            this.PAGE_DIVIDER = options.pageDivider;
+        },
+
+        slideIndex: function() {
+            throw new Error('You must implement slideIndex() or implement create() without it.');
         },
 
         /**
@@ -30,6 +36,15 @@ define('json', ['util'], function(util) {
             else {
                 return this.UNTITLED_SLIDE_TEXT;
             }
+        },
+
+        formatPage: function(index) {
+            // TODO: zero pad?
+            // var page, prefixLength;
+            // page = index + 1;
+            // prefixLength = (slideCount + '').length - (page + '').length;
+            // return util.zeroPrefix(page, prefixLength);
+            return index + 1;
         },
 
         /**
@@ -54,6 +69,7 @@ define('json', ['util'], function(util) {
             for (i = 0; i < slideCount; i++) {
                 slideData = {};
                 slideData.index = this.slideIndex(slides[i], i);
+                slideData.page = this.formatPage(i, slideCount);
                 slideData.title = this.slideTitle(slides[i]);
                 if (this.isTocSlide(slides[i])) {
                     slideData.toc = "true";
@@ -70,7 +86,8 @@ define('json', ['util'], function(util) {
     json.frameworks.revealjs = {
         SLIDE_SEARCH_STRING: '.slides > section',
         options: {
-            urlHash: "#/"
+            urlHash: '#/',
+            pageDivider: '.'
         },
         create: function() {
             var sections, sectionCount, tocArray, i;
@@ -84,6 +101,7 @@ define('json', ['util'], function(util) {
 
             this.removeNestedDuplicatesByTitles(tocArray);
             this.removeUntitledFirstChild(tocArray);
+            this.setPageNumberRecursive(tocArray);
 
             return tocArray;
         },
@@ -105,7 +123,12 @@ define('json', ['util'], function(util) {
          *    ** removeNestedDupicatesByTitles()
          */
         processSectionRecursive: function(slideIndex, slide, tocArray) {
-            var slideData, sectionCount, i;
+            var slideData, sectionCount, childSections, hasChildren, i;
+
+            // Actually returns all child sections, not just immediate children
+            // I'm getting away with it here because there is only one level of children
+            childSections = slide.querySelectorAll('section');
+            hasChildren = childSections.length > 0;
 
             slideData = {};
             slideData.index = slideIndex;
@@ -113,13 +136,9 @@ define('json', ['util'], function(util) {
             if (this.isTocSlide(slide)) {
                 slideData.toc = "true";
             }
-
             tocArray.push(slideData);
 
-            // Actually returns all child sections, not just immediate children
-            // I'm getting away with it here because there is only one level of children
-            var childSections = slide.querySelectorAll('section');
-            if (childSections.length === 0) {
+            if (!hasChildren) {
                 return;
             }
 
@@ -203,6 +222,40 @@ define('json', ['util'], function(util) {
                     parentSlide.nested.shift();
                 }
             }
+        },
+
+        setPageNumberRecursive: function(tocArray) {
+            for (var i = 0; i < tocArray.length; i++) {
+                var hasChildren = (!!tocArray[i].nested);
+                tocArray[i].page = this.formatPage(tocArray[i].index, hasChildren);
+                if (hasChildren) {
+                    this.setPageNumberRecursive(tocArray[i].nested);
+                }
+            }
+        },
+
+        formatPage: function (index, hasChildren) {
+            if (this.PAGE_DIVIDER === 'c') {
+                var formatPage = function () {
+                    return ++this.formatPage.pageCount;
+                };
+                formatPage.pageCount = 1;
+                this.formatPage = formatPage;
+                return formatPage.pageCount;
+            }
+            // index may be in the format n or n/n. This returns array of strings
+            var page = (index + '').split('/');
+            // Returns array of integers
+            page = page.map(Number);
+            // If length === 1, index was in form n, otherwise n/n
+            if (page.length === 1) {
+                if (hasChildren) {
+                    // Parent slide with children always  sufixed with 1
+                    return (page[0] + 1) + this.PAGE_DIVIDER + '1';
+                }
+                return (page[0] + 1);
+            }
+            return (page[0] + 1) + this.PAGE_DIVIDER + (page[1] + 1);
         }
     };
 
