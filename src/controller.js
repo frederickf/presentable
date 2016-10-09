@@ -11,7 +11,8 @@ define('controller', ['html', 'json','util'], function(html, json, util) {
                 reload: false,
                 titles: "h1,h2,h3,.presentable-title",
                 tocContainer: "#presentable-toc",
-                urlHash: "#"
+                urlHash: "#",
+                pageDivider: '/'
             },
 
             /**

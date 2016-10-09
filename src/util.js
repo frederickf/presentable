@@ -24,6 +24,14 @@ define('util', [], function() {
                     a[i] = b[i];
                 }
             }
+        },
+
+        zeroPrefix: function(stem, prefixLength) {
+            var i;
+            for (i = 0; i < prefixLength; i++) {
+                stem = '0' + stem;
+            }
+            return stem;
         }
     };
 

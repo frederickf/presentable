@@ -17,7 +17,7 @@ var html = function () {
                     }
                     li = document.createElement('li');
                     url = this.HASH_STRING + tocArray[i].index;
-                    li.innerHTML = '<div><a class="title" href="' + url + '">' + tocArray[i].title + '</a> <a class="index" href="' + url + '" >' + tocArray[i].index + '</a></div>';
+                    li.innerHTML = '<div><a class="title" href="' + url + '">' + tocArray[i].title + '</a> <a class="index" href="' + url + '" >' + tocArray[i].page + '</a></div>';
                     ol.appendChild(li);
                     if (tocArray[i].nested) {
                         this.createRecursive(li, tocArray[i].nested);
@@ -48,6 +48,13 @@ var util = function () {
                         a[i] = b[i];
                     }
                 }
+            },
+            zeroPrefix: function (stem, prefixLength) {
+                var i;
+                for (i = 0; i < prefixLength; i++) {
+                    stem = '0' + stem;
+                }
+                return stem;
             }
         };
     }();
@@ -57,10 +64,15 @@ var json = function (util) {
             TITLE_SEARCH_STRING: '',
             UNTITLED_SLIDE_TEXT: '',
             TOC_CONTAINER: '',
+            PAGE_DIVIDER: '',
             init: function (options) {
                 this.TITLE_SEARCH_STRING = options.titles;
                 this.UNTITLED_SLIDE_TEXT = options.noTitle;
                 this.TOC_CONTAINER = options.tocContainer;
+                this.PAGE_DIVIDER = options.pageDivider;
+            },
+            slideIndex: function () {
+                throw new Error('You must implement slideIndex() or implement create() without it.');
             },
             slideTitle: function (slide) {
                 var titleElement = slide.querySelector(this.TITLE_SEARCH_STRING);
@@ -69,6 +81,9 @@ var json = function (util) {
                 } else {
                     return this.UNTITLED_SLIDE_TEXT;
                 }
+            },
+            formatPage: function (index) {
+                return index + 1;
             },
             isTocSlide: function (slide) {
                 return slide.querySelector(this.TOC_CONTAINER);
@@ -81,6 +96,7 @@ var json = function (util) {
                 for (i = 0; i < slideCount; i++) {
                     slideData = {};
                     slideData.index = this.slideIndex(slides[i], i);
+                    slideData.page = this.formatPage(i, slideCount);
                     slideData.title = this.slideTitle(slides[i]);
                     if (this.isTocSlide(slides[i])) {
                         slideData.toc = 'true';
@@ -93,7 +109,10 @@ var json = function (util) {
         json.frameworks = {};
         json.frameworks.revealjs = {
             SLIDE_SEARCH_STRING: '.slides > section',
-            options: { urlHash: '#/' },
+            options: {
+                urlHash: '#/',
+                pageDivider: '.'
+            },
             create: function () {
                 var sections, sectionCount, tocArray, i;
                 sections = document.querySelectorAll(this.SLIDE_SEARCH_STRING);
@@ -104,13 +123,16 @@ var json = function (util) {
                 }
                 this.removeNestedDuplicatesByTitles(tocArray);
                 this.removeUntitledFirstChild(tocArray);
+                this.setPageNumberRecursive(tocArray);
                 return tocArray;
             },
             isTocSlide: function (slide) {
                 return util.querySelectorChild(slide, this.TOC_CONTAINER);
             },
             processSectionRecursive: function (slideIndex, slide, tocArray) {
-                var slideData, sectionCount, i;
+                var slideData, sectionCount, childSections, hasChildren, i;
+                childSections = slide.querySelectorAll('section');
+                hasChildren = childSections.length > 0;
                 slideData = {};
                 slideData.index = slideIndex;
                 slideData.title = this.slideTitleRecursive(slide);
@@ -118,8 +140,7 @@ var json = function (util) {
                     slideData.toc = 'true';
                 }
                 tocArray.push(slideData);
-                var childSections = slide.querySelectorAll('section');
-                if (childSections.length === 0) {
+                if (!hasChildren) {
                     return;
                 }
                 slideData.nested = [];
@@ -169,6 +190,34 @@ var json = function (util) {
                         parentSlide.nested.shift();
                     }
                 }
+            },
+            setPageNumberRecursive: function (tocArray) {
+                for (var i = 0; i < tocArray.length; i++) {
+                    var hasChildren = !!tocArray[i].nested;
+                    tocArray[i].page = this.formatPage(tocArray[i].index, hasChildren);
+                    if (hasChildren) {
+                        this.setPageNumberRecursive(tocArray[i].nested);
+                    }
+                }
+            },
+            formatPage: function (index, hasChildren) {
+                if (this.PAGE_DIVIDER === 'c') {
+                    var formatPage = function () {
+                        return ++this.formatPage.pageCount;
+                    };
+                    formatPage.pageCount = 1;
+                    this.formatPage = formatPage;
+                    return formatPage.pageCount;
+                }
+                var page = (index + '').split('/');
+                page = page.map(Number);
+                if (page.length === 1) {
+                    if (hasChildren) {
+                        return page[0] + 1 + this.PAGE_DIVIDER + '1';
+                    }
+                    return page[0] + 1;
+                }
+                return page[0] + 1 + this.PAGE_DIVIDER + (page[1] + 1);
             }
         };
         json.frameworks.html5slides = {
@@ -215,7 +264,8 @@ var controller = function (html, json, util) {
                     reload: false,
                     titles: 'h1,h2,h3,.presentable-title',
                     tocContainer: '#presentable-toc',
-                    urlHash: '#'
+                    urlHash: '#',
+                    pageDivider: '/'
                 },
                 init: function (userOptions) {
                     var tocSlideData, toc, tocContainer, iconContainer;
