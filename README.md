@@ -10,12 +10,12 @@ Presentable is a small script/plugin/widget/thingy that adds a table of contents
 ## Table of contents
 
 1. [Framework Support](#framework-support)
-2. [Browser Support](#browsers-support)
+2. [Browser Support](#browser-support)
 3. [Quickstart](#quickstart)
 4. [Basics](#basics)
 5. [Configuration](#configuration)
 6. [Support for other frameworks](#support-for-other-frameworks)
-7. [Bonus! Getting a slide title](#bonus-Getting-a-slide-title)
+7. [Bonus! Getting a slide title](#bonus-getting-a-slide-title)
 
 ## Framework support
 
