@@ -21,7 +21,7 @@ Presentable is a small script/plugin/widget/thingy that adds a table of contents
 
 The following presentation frameworks are supported out of the box, and Presentable can theoretically handle other frameworks too, although your mileage may vary.
 
-* [Reveal.js](https://github.com/hakimel/reveal.js)
+* [reveal.js](https://github.com/hakimel/reveal.js)
 * [Shower](https://github.com/pepelsbey/shower)
 * [impress.js](https://github.com/bartaz/impress.js/)
 * html5slides
