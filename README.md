@@ -74,7 +74,7 @@ It can also accept other configuration options allowing Presentable to support a
 
 ## Basics
 
-Presentable will turn "titles" into an lines in the table of contents. By default, a "title" is any HTML element that meets the following requirements:
+Presentable will turn slide "titles" into lines in the table of contents. By default, a slide "title" is an HTML element that meets the following requirements:
 * It is an `<h1>`, `<h2>`, `<h3>`, or
 * any tag marked with the .presentable-title class
 
