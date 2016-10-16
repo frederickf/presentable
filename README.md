@@ -1,10 +1,23 @@
 # Presentable
 ### A Table of Contents for HTML Presentations
 
+> Spacebar to go forward,
+> p to go backwards,
+> Presentable to go anywhere!
+
 Presentable is a small script/plugin/widget/thingy that adds a table of contents to HTML based presentations by parsing the header tags.  
 
+## Table of contents
 
-## Framework Support
+1. [Framework Support](#framework-support)
+2. [Browser Support](#browsers-support)
+3. [Quickstart](#quickstart)
+4. [Basics](#basics)
+5. [Configuration](#configuration)
+6. [Support for other frameworks](#support-for-other-frameworks)
+7. [Bonus! Getting a slide title](#bonus-Getting-a-slide-title)
+
+## Framework support
 
 The following presentation frameworks are supported out of the box, and Presentable can theoretically handle other frameworks too, although your mileage may vary.
 
@@ -16,7 +29,7 @@ The following presentation frameworks are supported out of the box, and Presenta
 
 Refer to wiki for details on using Presentable with these presentation frameworks.
 
-## Browser Support
+## Browser support
 Presentable should work in Firefox, Chrome, Safari, Edge and IE9+.
 
 ## Quickstart
@@ -61,11 +74,11 @@ It can also accept other configuration options allowing Presentable to support a
 
 ## Basics
 
-Presentable will turn any a "title" tag into an entry in the table of contents. By default, a "title" is any HTML element that meets the following requirements:
+Presentable will turn "titles" into an lines in the table of contents. By default, a "title" is any HTML element that meets the following requirements:
 * It is an `<h1>`, `<h2>`, `<h3>`, or
 * any tag marked with the .presentable-title class
 
-The first eligible element in the DOM will be the table of contents title
+The first eligible element in a slide will be the title for that slide in the table of contents:
 
 ```
 <section>
@@ -87,7 +100,7 @@ Identifies the presentation framework. Presentable will generate the correct TOC
 
 Accepts one of the following: `revealjs`, `html5slides`, `io-2012-slides`, `shower`, `impressjs`
 
-**This configuration is required if `data` is not used and will be ignored if `data` is used**
+**This configuration is required if `data` is not used and will be ignored if `data` is used.**
 
 ```
 presentable.toc({
@@ -98,7 +111,7 @@ presentable.toc({
 ### data
 Pass in a custom presentation structure. The `framework` option is ignored when this option is used. See Other frameworks below for more details.
 
-**This configuration is required if `framework` is not used and will be ignored if `framework` is used**
+**This configuration is required if `framework` is not used and will be ignored if `framework` is used.**
 
 ```
 presentable.toc({
@@ -123,7 +136,7 @@ presentable.toc({
 ```
 
 ### hideNoTitle
-Untitled slides are excluded from the TOC when this option is `true`
+Untitled slides are excluded from the TOC when this option is `true`.
 ```
 presentable.toc({
     hideNoTitle: false
@@ -139,7 +152,7 @@ presentable.toc({
 ```
 
 ### titles
-HTML IDs, classes, and elements to be considered slide titles
+HTML IDs, classes, and elements to be considered slide titles.
 ```
 presentable.toc({
     titles: "h1,h2,h3,.presentable-title"
@@ -155,7 +168,9 @@ presentable.toc({
 ```
 
 ### pageDivider
-Identifies how slides and nested slides are separated. If any character other than `c` is used, then the Parent and child pages in the TOC will be separated by that value. If `c` is used, then the total slide counts will be displayed instead showing parent and child counts.
+Identifies how slides and nested slides are separated. If any character other than `c` is used, then the Parent and child pages in the TOC will be separated by that value. If `c` is used, then an ascending slide counts will be displayed instead showing parent and child counts.
+
+This configuration only applies to presentation frameworks that support nested slides (like reveal.js). Flat presentations will always show the ascending slide.
 
 ```
 presentable.toc({
@@ -204,13 +219,13 @@ presentable.toc({
 
 key | value
 --- | -----
-`index` | The value used by the presentation to identify slides. This value is also used in the URL. In some presentations this will be the same as `page`
-`page` | Displayed in the table of contents to the right of the slide title
-`title` | Displayed in the table of contents to the left of the page number
-`toc` | Identifies the slide containing the slide containing the table of contents
-`nested` | Child slides. Reveal.js only
+`index` | The value used by the presentation to identify slides. This value is also used in the URL. In some presentations this will be the same as `page`.
+`page` | Displayed in the table of contents to the right of the slide title.
+`title` | Displayed in the table of contents to the left of the page number.
+`toc` | Identifies the slide containing the slide containing the table of contents.
+`nested` | Nested slides.
 
-## Getting a slide title
+## Bonus! Getting a slide title
 Presentable exposes the slideTitle(index) function which returns the title of a slide identified by an index which matches the URL hash corresponding to that slide.
 
 ```
