@@ -109,7 +109,7 @@ presentable.toc({
 ```
 
 ### data
-Pass in a custom presentation structure. The `framework` option is ignored when this option is used. See Other frameworks below for more details.
+Pass in a custom presentation structure. The `framework` option is ignored when this option is used. See [Support for other frameworks](#support-for-other-frameworks) below for more details.
 
 **This configuration is required if `framework` is not used and will be ignored if `framework` is used.**
 
@@ -120,7 +120,7 @@ presentable.toc({
 ```
 
 ### keyCode
-Used for keyboard navigation back to TOC slide. The default, `84` eqauals the `t` key. Set to `false` to disable.
+Used for keyboard navigation back to TOC slide. The default, `84` equals the `t` key. Set to `false` to disable.
 ```
 presentable.toc({
     keyCode: 84
@@ -196,7 +196,7 @@ Slide title            4
 ```
 
 ## Support for other frameworks
-A JSON object can be passed to presentable.toc() making it possible to generate a table of contents for otherwise unsupported presentation frameworks.
+A JSON object can be passed to `presentable.toc()` making it possible to generate a table of contents for otherwise unsupported presentation frameworks.
 
 The JSON object should have the following format:
 
@@ -223,10 +223,10 @@ key | value
 `page` | Displayed in the table of contents to the right of the slide title.
 `title` | Displayed in the table of contents to the left of the page number.
 `toc` | Identifies the slide containing the slide containing the table of contents.
-`nested` | Nested slides.
+`nested` | Nested slides. Only one level of nesting is supported.
 
 ## Bonus! Getting a slide title
-Presentable exposes the slideTitle(index) function which returns the title of a slide identified by an index which matches the URL hash corresponding to that slide.
+Presentable exposes the `slideTitle(index)` function which returns the title of a slide identified by an index which matches the URL hash corresponding to that slide.
 
 ```
 // example.com/my-presentation#11
