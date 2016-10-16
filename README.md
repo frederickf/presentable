@@ -170,7 +170,7 @@ presentable.toc({
 ### pageDivider
 Identifies how slides and nested slides are separated. If any character other than `c` is used, then the Parent and child pages in the TOC will be separated by that value. If `c` is used, then an ascending slide counts will be displayed instead showing parent and child counts.
 
-This configuration only applies to presentation frameworks that support nested slides (like reveal.js). Flat presentations will always show the ascending slide.
+This configuration only applies to presentation frameworks that support nested slides (like reveal.js). Flat presentations will always show the ascending slide count.
 
 ```
 presentable.toc({
