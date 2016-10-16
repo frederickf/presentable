@@ -8,6 +8,8 @@ module.exports = function(grunt) {
             },
             license: {
                 files: {
+                    'dist/presentable.css': 'dist/presentable.css',
+                    'dist/presentable.js': 'dist/presentable.js',
                     'dist/presentable.min.css': 'dist/presentable.min.css',
                     'dist/presentable.min.js': 'dist/presentable.min.js'
                 }
@@ -49,15 +51,13 @@ module.exports = function(grunt) {
         jshint: {
             options: {
                 browser: true,
+                browserify: true,
                 camelcase: true,
                 curly: true,
                 eqeqeq: true,
                 eqnull: true,
                 globals: {
-                    console: true,
-                    define: true,
-                    require: true,
-                    requirejs: true
+                    console: true
                 },
                 indent: 4,
                 latedef: true,
@@ -67,21 +67,14 @@ module.exports = function(grunt) {
             },
             src: 'src/*.js'
         },
-        requirejs: {
+        browserify: {
             js: {
+                files: {
+                    'dist/presentable.js': 'src/main.js'
+                },
                 options: {
-                    name: 'main',
-                    baseUrl: 'src',
-                    wrap: {
-                        start: '(function(window, document) {',
-                        end: '}(window, document) );'
-                    },
-                    optimize: 'none',
-                    mainConfigFile: 'src/requireConfig.js',
-                    out: 'dist/presentable.js',
-                    skipModuleInsertion: true,
-                    onBuildWrite: function( name, path, contents ) {
-                        return require('amdclean').clean(contents);
+                    browserifyOptions: {
+                        standalone: 'presentable'
                     }
                 }
             }
@@ -95,11 +88,11 @@ module.exports = function(grunt) {
           }
     });
 
+    grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
     grunt.registerTask("build", [
@@ -107,7 +100,7 @@ module.exports = function(grunt) {
         'copy:css',
         'cssmin:minify',
         'jshint:src',
-        'requirejs:js',
+        'browserify:js',
         'uglify:js',
         'concat:license'
     ]);
