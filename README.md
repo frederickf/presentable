@@ -1,8 +1,8 @@
 # Presentable
 ### A Table of Contents for HTML Presentations
 
-> Spacebar to go forward,
-> p to go backwards,
+> Spacebar to go forward,  
+> p to go backwards,  
 > Presentable to go anywhere!
 
 Presentable is a small script/plugin/widget/thingy that adds a table of contents to HTML based presentations by parsing the header tags.  
