@@ -1,9 +1,10 @@
 # Presentations
 
-These presentation are here for the purpose of testing Presentable. Find the originals at the locations below:
+These presentation are here for the purpose of testing and demonstrating Presentable.
+Learn more at:
 
-* Reveal.js: https://github.com/hakimel/reveal.js
-* html5slides: http://code.google.com/p/html5slides/
-* io-2012-slides (formerly html5slides): https://code.google.com/p/io-2012-slides/
-* Shower: https://github.com/pepelsbey/shower
-* impress.js: https://github.com/bartaz/impress.js/
+* reveal.js: https://github.com/frederickf/presentable/wiki/For-reveal.js
+* Shower: https://github.com/frederickf/presentable/wiki/For-Shower
+* impress.js: https://github.com/frederickf/presentable/wiki/For-impress.js
+* html5slides: https://github.com/frederickf/presentable/wiki/For-html5slides
+* io-2012-slides: https://github.com/frederickf/presentable/wiki/For-io-2012-slides
