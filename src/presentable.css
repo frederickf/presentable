@@ -123,7 +123,15 @@
 }
 
 #presentable-toc.shower a {
+    /* Shower v? ~2013-10-18 */
     border: none;
+    /* Shower ~v2.1.4 2016-10-18 */
+    background: none;
+    /* It is an amazing coincidence that I happened to update shower after 3 years to the day! */
+}
+
+#presentable-icon {
+    z-index: 1
 }
 
 .cover #presentable-icon.shower,
