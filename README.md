@@ -33,7 +33,7 @@ Refer to wiki for details on using Presentable with these presentation framework
 Presentable should work in Firefox, Chrome, Safari, Edge and IE9+.
 
 ## Quickstart
-These are generic instructions to give you an idea of how to install presentable. Refer to the wiki for framework specific installation instructions.
+These are generic instructions to give you an idea of how to install Presentable. Refer to the wiki for framework specific installation instructions.
 
 ### CSS
 Add the CSS in the &lt;head&gt; tag.
@@ -93,10 +93,10 @@ Press the `t` key navigate back to the TOC from anywhere in the presentation. Th
 
 
 ## Configuration
-The following configurations can be passed to presentable.toc(). The options and their default values are demonstrated below. One of `framework` or `data` is required, all others are optional.
+The following configurations can be passed to `presentable.toc()`. The options and their default values are demonstrated below. One of `framework` or `data` is required, all others are optional.
 
 ### framework
-Identifies the presentation framework. Presentable will generate the correct TOC for the framework based on this value. The `data` option is ignored when this option is ued.
+Identifies the presentation framework. Presentable will generate the correct TOC for the framework based on this value. The `data` option is ignored when this option is used.
 
 Accepts one of the following: `revealjs`, `html5slides`, `io-2012-slides`, `shower`, `impressjs`
 
