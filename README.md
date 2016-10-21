@@ -16,7 +16,6 @@ Presentable is a small script/plugin/widget/thingy that adds a table of contents
 * [Usage](#usage)
 * [Configuration](#configuration)
 * [Support for other frameworks](#support-for-other-frameworks)
-* [Bugs, feature requests, contributing](#bugs-feature-requests-contributing)
 
 ## Framework support
 
