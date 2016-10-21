@@ -9,13 +9,14 @@ Presentable is a small script/plugin/widget/thingy that adds a table of contents
 
 ## Table of contents
 
-1. [Framework Support](#framework-support)
-2. [Browser Support](#browser-support)
-3. [Quickstart](#quickstart)
-4. [Basics](#basics)
-5. [Configuration](#configuration)
-6. [Support for other frameworks](#support-for-other-frameworks)
-7. [Bonus! Getting a slide title](#bonus-getting-a-slide-title)
+* [Framework Support](#framework-support)
+* [Browser Support](#browser-support)
+* [Quickstart](#quickstart)
+* [Basics](#basics)
+* [Usage](#usage)
+* [Configuration](#configuration)
+* [Support for other frameworks](#support-for-other-frameworks)
+* [Bugs, feature requests, contributing](#bugs-feature-requests-contributing)
 
 ## Framework support
 
@@ -27,13 +28,13 @@ The following presentation frameworks are supported out of the box, and Presenta
 * html5slides
 * io-2012-slides
 
-Refer to wiki for details on using Presentable with these presentation frameworks.
+Refer to the [wiki](https://github.com/frederickf/presentable/wiki) for details on using Presentable with these presentation frameworks.
 
 ## Browser support
 Presentable should work in Firefox, Chrome, Safari, Edge and IE9+.
 
 ## Quickstart
-These are generic instructions to give you an idea of how to install Presentable. Refer to the wiki for framework specific installation instructions.
+These are generic instructions to give you an idea of how to install Presentable. Refer to the [wiki](https://github.com/frederickf/presentable/wiki) for framework specific installation instructions.
 
 ### CSS
 Add the CSS in the &lt;head&gt; tag.
@@ -69,7 +70,7 @@ This goes <em>after</em> all the slides.
 It can also accept other configuration options allowing Presentable to support almost any framework.
 
     presentable.toc({
-        config: "options here"
+        config: "value"
     });
 
 ## Basics
@@ -89,11 +90,41 @@ The first eligible element in a slide will be the title for that slide in the ta
 
 Every slide should have a "title" or it will be assigned the title "Untitled Slide" in the table of contents. However, untitled slides can be omitted from the table of contents by using the "hideNoTitle" option. There is also an option to change the default untitled slide text.
 
+Any markup that was in the slide title will be stripped from the table of contents titles.
+
 Press the `t` key navigate back to the TOC from anywhere in the presentation. This option is configurable.
 
+## Usage
+Presentable exposes the following two methods:
+```
+presentable.toc()
+presentable.slideTitle()
+```
+
+### Configuration and initialization
+Calling `presentable.toc()` will trigger presentable to parse your presentation and render the table of contents. It must be called after the presentation is in the DOM and fully rendered. `presentable.toc()` should only be called once.
+
+You also pass configuration options to `presentable.toc()`. One of `framework` or `data` are required. All other configurations are optional.
+```
+presentable.toc({
+    framework: 'revealjs',
+    pageDivider: '-',
+})
+```
+
+### Getting a slide title
+Presentable also exposes `presentable.slideTitle()` function which  returns the title of a slide identified by an index which matches the URL hash corresponding to that slide.
+
+```
+// example.com/my-presentation#11
+presentable.slideTitle("11");
+// example.com/my-presentation#0/1
+presentable.slideTitle("0/1");
+```
+One possible use is to track traffic to specific slides by passing the slide title to your web analytics provider each time it is visited.
 
 ## Configuration
-The following configurations can be passed to `presentable.toc()`. The options and their default values are demonstrated below. One of `framework` or `data` is required, all others are optional.
+The following configurations can be passed to `presentable.toc()`. The options and their default values are demonstrated below. Some frameworks have their own defaults. See the [wiki](https://github.com/frederickf/presentable/wiki) for more details.
 
 ### framework
 Identifies the presentation framework. Presentable will generate the correct TOC for the framework based on this value. The `data` option is ignored when this option is used.
@@ -224,14 +255,3 @@ key | value
 `title` | Displayed in the table of contents to the left of the page number.
 `toc` | Identifies the slide containing the slide containing the table of contents.
 `nested` | Nested slides. Only one level of nesting is supported.
-
-## Bonus! Getting a slide title
-Presentable exposes the `slideTitle(index)` function which returns the title of a slide identified by an index which matches the URL hash corresponding to that slide.
-
-```
-// example.com/my-presentation#11
-presentable.slideTitle("11");
-// example.com/my-presentation#0/1
-presentable.slideTitle("0/1");
-```
-One possible use is to track traffic to specific slides by passing the slide title to your web analytics provider each time it is visited.
