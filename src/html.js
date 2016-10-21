@@ -17,7 +17,7 @@ module.exports = {
 
             li = document.createElement("li");
             url = this.HASH_STRING + tocArray[i].index;
-            li.innerHTML = '<div><a class="title" href="'+ url +'">' + tocArray[i].title + '</a> <a class="index" href="'+ url +'" >' + tocArray[i].page + '</a></div>';
+            li.innerHTML = '<div><a class="title" href="'+ url +'">' + tocArray[i].title + '</a> <a class="page" href="'+ url +'" >' + tocArray[i].page + '</a></div>';
             ol.appendChild(li);
 
             if (tocArray[i].nested) {
